@@ -37,7 +37,7 @@ export function ContactForm() {
           message: formData.get("message"),
         }),
       });
-      const result = (await response.json()) as { error?: string };
+      const result = (await response.json()) as { error?: string; mode?: string };
       const contactEmail =
         typeof (result as { contactEmail?: unknown }).contactEmail === "string"
           ? (result as { contactEmail: string }).contactEmail
@@ -52,11 +52,16 @@ export function ContactForm() {
       }
 
       form.reset();
+      const savedOnly = result.mode === "stored";
+      const successMessage = savedOnly
+        ? "Message saved for the editorial team."
+        : "Message delivered to the editorial inbox.";
+
       setNotice({
         tone: "success",
-        message: "Message delivered to the editorial inbox.",
+        message: successMessage,
       });
-      toast.success("Message sent to the editorial team.");
+      toast.success(savedOnly ? "Message saved." : "Message sent to the editorial team.");
     } catch (error) {
       const message = error instanceof Error ? error.message : "Could not send message";
       const contactEmail =

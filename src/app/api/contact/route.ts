@@ -74,6 +74,14 @@ export async function POST(request: Request) {
   if (!emailResult.ok) {
     console.error("Contact email delivery failed", emailResult.error);
 
+    if (stored) {
+      return NextResponse.json({
+        ok: true,
+        mode: "stored",
+        stored,
+      });
+    }
+
     return NextResponse.json(
       {
         error: `Email delivery is not configured yet. Please email ${contactInboxEmail} directly.`,
