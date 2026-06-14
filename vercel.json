@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/visa-intelligence/daily",
+      "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/newsletter/weekly",
+      "schedule": "0 8 * * 1"
+    }
+  ]
+}
