@@ -44,6 +44,9 @@ export const metadata: Metadata = {
     title: "Nomad Visa Radar",
     description: siteConfig.description,
   },
+  other: {
+    "google-adsense-account": googleAdsenseClientId,
+  },
   ...(googleSiteVerification
     ? {
         verification: {
@@ -70,7 +73,7 @@ export default function RootLayout({
           async
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${googleAdsenseClientId}`}
           crossOrigin="anonymous"
-          strategy="afterInteractive"
+          strategy="beforeInteractive"
         />
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
