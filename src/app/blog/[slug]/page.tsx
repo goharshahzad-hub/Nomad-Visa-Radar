@@ -77,6 +77,7 @@ export default async function BlogPostPage({
       "@type": "Organization",
       name: siteConfig.name,
     },
+    citation: post.sources?.map((source) => source.url),
     mainEntityOfPage: `${siteConfig.url}/blog/${post.slug}`,
   };
 
@@ -153,6 +154,27 @@ export default async function BlogPostPage({
             </section>
           ))}
         </div>
+
+        {post.sources && post.sources.length > 0 && (
+          <Card className="mt-10 p-6">
+            <h2 className="text-2xl font-semibold">Official sources checked</h2>
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">
+              Visa rules can change by consulate, nationality, and filing date. Use these official pages before making an application decision.
+            </p>
+            <ul className="mt-5 space-y-3">
+              {post.sources.map((source) => (
+                <li key={source.url}>
+                  <Link
+                    href={source.url}
+                    className="text-sm font-medium text-primary underline-offset-4 hover:underline"
+                  >
+                    {source.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Card>
+        )}
 
         <Card className="mt-10 p-6">
           <h2 className="text-2xl font-semibold">FAQ</h2>

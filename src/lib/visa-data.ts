@@ -2677,6 +2677,10 @@ export type BlogPost = {
   image: string;
   imageAlt: string;
   keywords: string[];
+  sources?: {
+    label: string;
+    url: string;
+  }[];
   sections: {
     heading: string;
     body: string;
@@ -3190,6 +3194,512 @@ export const blogPosts: BlogPost[] = [
         question: "Which visa is easiest for US citizens?",
         answer:
           "Ease depends on income evidence, appointment access, document requirements, and country preference. There is no one route that is easiest for every US applicant.",
+      },
+    ],
+  },
+  {
+    slug: "portugal-d8-remote-work-visa-official-source-guide",
+    title: "Portugal D8 Remote Work Visa: Official-Source Guide for 2026",
+    excerpt:
+      "A careful, plain-English guide to Portugal's temporary-stay remote work route, the documents to prepare, and the official source to check before applying.",
+    category: "Official Guides",
+    author: "Nomad Visa Radar Editorial",
+    date: "2026-06-14",
+    updated: "2026-06-14",
+    readTime: "10 min read",
+    image: blogImages.europe,
+    imageAlt: "Lisbon street scene for a Portugal remote work visa guide",
+    keywords: [
+      "Portugal D8 visa",
+      "Portugal digital nomad visa",
+      "Portugal remote work visa requirements",
+      "Portugal temporary stay visa remote work",
+    ],
+    sources: [
+      {
+        label: "Portuguese Ministry of Foreign Affairs visa portal - Temporary stay documentation",
+        url: "https://vistos.mne.gov.pt/en/national-visas/necessary-documentation/temporary-stay",
+      },
+      {
+        label: "Portuguese Ministry of Foreign Affairs visa portal",
+        url: "https://vistos.mne.gov.pt/en/",
+      },
+    ],
+    sections: [
+      {
+        heading: "Who Portugal's remote-work route is best for",
+        body:
+          "Portugal is still one of the most searched European options for remote workers because it combines a familiar temporary-stay visa route with strong city infrastructure, an active international community, and practical flight links. The safest way to read the route is not as a casual travel permission, but as a national visa process where the applicant must prove identity, lawful residence where applying, financial resources, insurance, and a real remote-work purpose.",
+      },
+      {
+        heading: "What the official checklist tells you to prepare",
+        body:
+          "The Portuguese visa portal lists general national-visa documents first, then purpose-specific documents. Before an appointment, applicants should check the exact consulate page they will use, because appointment systems and local proof preferences can vary.",
+        bullets: [
+          "National visa application form completed and signed.",
+          "Passport and a copy of the biographical page.",
+          "Proof of regular status if applying outside your country of nationality.",
+          "Criminal-record certificate where required by the checklist.",
+          "Proof of financial resources and travel medical insurance.",
+          "Remote-work evidence, such as employment, freelance, or business documents, matched to the current purpose-of-stay checklist.",
+        ],
+      },
+      {
+        heading: "How to make the file stronger",
+        body:
+          "A strong Portugal file is boring in the best way: recent statements, clear contracts, clean dates, matching names, and no mystery income. If your income is freelance or founder-based, add context that explains who pays you, where clients are located, and why the work remains outside Portugal. Families should prepare dependent documents early, especially birth certificates, marriage certificates, translations, and insurance proof.",
+      },
+      {
+        heading: "Common mistakes",
+        body:
+          "The biggest mistakes are relying on old blog posts, using income evidence that does not match the consulate's wording, waiting too long to order background checks, and assuming Portugal's popularity means the process is informal. Treat the official portal and the local consulate as the final checklist.",
+      },
+    ],
+    faq: [
+      {
+        question: "Is Portugal's D8 route the same for every consulate?",
+        answer:
+          "The legal route is national, but consular appointment steps and supporting-document preferences can differ. Always check the consulate that will receive your application.",
+      },
+      {
+        question: "Can families use the Portugal remote-work route?",
+        answer:
+          "Portugal can be family-relevant, but dependent documents, income planning, schooling, and residence steps should be checked before assuming timing or costs.",
+      },
+      {
+        question: "Should I rely on a fixed income number from an article?",
+        answer:
+          "No. Income thresholds can change when minimum-wage-linked calculations change. Confirm the current threshold on the official visa source or consulate page before applying.",
+      },
+    ],
+  },
+  {
+    slug: "spain-digital-nomad-visa-official-source-guide",
+    title: "Spain Digital Nomad Visa: Official-Source Guide for Remote Workers",
+    excerpt:
+      "A human-readable guide to Spain's international telework visa, including who it is for, family eligibility signals, and documents to prepare.",
+    category: "Official Guides",
+    author: "Nomad Visa Radar Editorial",
+    date: "2026-06-14",
+    updated: "2026-06-14",
+    readTime: "11 min read",
+    image: blogImages.europe,
+    imageAlt: "Spanish city balcony used for a Spain digital nomad visa guide",
+    keywords: [
+      "Spain digital nomad visa",
+      "Spain international telework visa",
+      "Spain remote worker visa requirements",
+      "Spain nomad visa family",
+    ],
+    sources: [
+      {
+        label: "Spanish Consulate in London - Digital Nomad Visa",
+        url: "https://www.exteriores.gob.es/Consulados/londres/en/ServiciosConsulares/Paginas/Consular/Digital-Nomad-Visa.aspx",
+      },
+      {
+        label: "Spanish Ministry of Foreign Affairs consular services",
+        url: "https://www.exteriores.gob.es/",
+      },
+    ],
+    sections: [
+      {
+        heading: "Who Spain's digital nomad visa is for",
+        body:
+          "Spain's consular guidance describes this visa for foreigners who plan to live in Spain as residents while working remotely for a company, employer, or self-employed activity located outside Spain. That wording matters: the route is built around foreign-source remote work, not taking a local Spanish job.",
+      },
+      {
+        heading: "Family members and dependent planning",
+        body:
+          "The Spanish consular page states that family members may also obtain the visa, including a spouse or unmarried partner, dependent children, and dependent relatives in the ascending line who form part of the family unit. Families should still prepare for higher documentation volume and potentially higher financial proof.",
+      },
+      {
+        heading: "Documents the official page highlights",
+        body:
+          "Spain's official consular checklist is detailed. Applicants should not treat this as a one-page form. Build the file around identity, professional eligibility, clean background evidence, and proof that the remote work qualifies.",
+        bullets: [
+          "National visa application form for each applicant.",
+          "Recent passport-size photograph.",
+          "Passport that meets the validity and blank-page requirements listed by the consulate.",
+          "Criminal-record certificate for adult applicants, plus any required declaration.",
+          "Evidence of qualifications, professional experience, employment, self-employment, or remote-work relationship.",
+          "NIE steps and other consular instructions before filing.",
+        ],
+      },
+      {
+        heading: "Who Spain fits best",
+        body:
+          "Spain is a strong candidate for remote workers who want large cities, international schools, strong transport, and a long-stay European base. It is less ideal for applicants whose work evidence is informal, whose income varies sharply month to month, or whose employer cannot provide clear remote-work confirmation.",
+      },
+    ],
+    faq: [
+      {
+        question: "Can self-employed remote workers apply for Spain's digital nomad visa?",
+        answer:
+          "The Spanish consular guidance includes self-employed applicants working for activity located outside Spain, but the evidence must match the official checklist.",
+      },
+      {
+        question: "Can dependents join a Spain digital nomad visa application?",
+        answer:
+          "The official consular page lists spouse or unmarried partner, dependent children, and dependent relatives in the ascending line as family members who may obtain the visa.",
+      },
+      {
+        question: "Is the Spain visa easier than Portugal?",
+        answer:
+          "Not always. Spain can be excellent for the right applicant, but its file can be document-heavy. Compare your evidence against both official checklists before choosing.",
+      },
+    ],
+  },
+  {
+    slug: "croatia-digital-nomad-temporary-stay-guide",
+    title: "Croatia Digital Nomad Temporary Stay: Official-Source Guide",
+    excerpt:
+      "A practical guide to Croatia's digital nomad temporary stay, including the official definition, duration signals, family rules, and application preparation.",
+    category: "Official Guides",
+    author: "Nomad Visa Radar Editorial",
+    date: "2026-06-14",
+    updated: "2026-06-14",
+    readTime: "9 min read",
+    image: blogImages.europe,
+    imageAlt: "Croatian coastal town used for a digital nomad temporary stay guide",
+    keywords: [
+      "Croatia digital nomad visa",
+      "Croatia temporary stay digital nomads",
+      "Croatia remote worker visa",
+      "Croatia digital nomad family reunification",
+    ],
+    sources: [
+      {
+        label: "Croatian Ministry of the Interior - Temporary stay of digital nomads",
+        url: "https://mup.gov.hr/aliens-281621/stay-and-work/digital-nomads/286833",
+      },
+    ],
+    sections: [
+      {
+        heading: "The official definition is narrow",
+        body:
+          "Croatia's Ministry of the Interior defines a digital nomad as a third-country national who is employed or performs work through communication technology for a company or their own company that is not registered in Croatia, and who does not perform work or provide services to employers in Croatia. That definition is the center of the route.",
+      },
+      {
+        heading: "Duration and renewal expectations",
+        body:
+          "The official page states that temporary stay can be granted for up to a maximum of eighteen months, and may be granted for less. It also explains timing rules around extension and when a new application can be submitted after a previous stay. Applicants should plan around residence timing, not just arrival flights.",
+      },
+      {
+        heading: "Family members",
+        body:
+          "Croatia's official guidance says close family members of a digital nomad who has been granted temporary stay may join them in Croatia through the family reunification route. The practical point is sequence: the digital nomad's own stay matters before family applications are treated as reunification.",
+      },
+      {
+        heading: "Who Croatia fits best",
+        body:
+          "Croatia is attractive for remote workers who want an EU coastal base, a clear official digital-nomad category, and a route that directly explains the no-local-work boundary. It is less suitable for anyone planning to sell services to Croatian employers or blend local employment into the stay.",
+      },
+    ],
+    faq: [
+      {
+        question: "Can a Croatia digital nomad work for Croatian clients?",
+        answer:
+          "The official definition says the person does not perform work or provide services to employers in Croatia. Applicants with local-client plans should seek professional advice before relying on this route.",
+      },
+      {
+        question: "How long can Croatia digital nomad temporary stay last?",
+        answer:
+          "The official Ministry of the Interior page states that temporary stay may be granted up to a maximum of eighteen months, though individual approvals can be shorter.",
+      },
+      {
+        question: "Can family members join?",
+        answer:
+          "The official page points close family members toward family reunification after the digital nomad has been granted temporary stay.",
+      },
+    ],
+  },
+  {
+    slug: "estonia-digital-nomad-visa-vs-e-residency-guide",
+    title: "Estonia Digital Nomad Visa vs e-Residency: What Remote Workers Should Know",
+    excerpt:
+      "A clear guide to Estonia's digital nomad visa, how it differs from e-Residency, and when each option makes sense.",
+    category: "Official Guides",
+    author: "Nomad Visa Radar Editorial",
+    date: "2026-06-14",
+    updated: "2026-06-14",
+    readTime: "8 min read",
+    image: blogImages.remote,
+    imageAlt: "Remote worker reviewing Estonia digital documents",
+    keywords: [
+      "Estonia digital nomad visa",
+      "Estonia e-Residency vs digital nomad visa",
+      "Estonia remote worker visa",
+      "digital nomad visa Estonia requirements",
+    ],
+    sources: [
+      {
+        label: "Estonian e-Residency - Digital Nomad Visa comparison",
+        url: "https://www.e-resident.gov.ee/nomadvisa/",
+      },
+    ],
+    sections: [
+      {
+        heading: "The biggest difference",
+        body:
+          "Estonia's official comparison is useful because it separates two ideas people often confuse. e-Residency is a digital identity for accessing Estonian e-services and running an online company. The Digital Nomad Visa is a right for qualifying remote workers to temporarily stay in Estonia.",
+      },
+      {
+        heading: "What the digital nomad visa is for",
+        body:
+          "The official page describes the Digital Nomad Visa as suitable for remote workers who can work online and independently of location. It points to applicants working for an employer registered abroad, their own company registered abroad, or as freelancers for clients mostly abroad.",
+      },
+      {
+        heading: "Timing and process signals",
+        body:
+          "Estonia's official page says the visa is picked up at the nearest Estonian Embassy and that the process takes up to 30 days. That makes preparation important: applicants should not book irreversible housing or travel before they understand the embassy appointment and document timeline.",
+      },
+      {
+        heading: "Who Estonia fits best",
+        body:
+          "Estonia is strongest for founders, developers, consultants, and remote professionals who value digital administration, clean systems, and a northern European base. It is not the same as e-Residency, and holding e-Residency alone does not give a right to live in Estonia.",
+      },
+    ],
+    faq: [
+      {
+        question: "Does e-Residency let me live in Estonia?",
+        answer:
+          "No. Estonia's official comparison treats e-Residency as digital access to services, while the Digital Nomad Visa is the stay route for qualifying remote workers.",
+      },
+      {
+        question: "How long is Estonia's digital nomad visa for?",
+        answer:
+          "The official page describes it as a right for remote workers to temporarily stay in Estonia for up to one year.",
+      },
+      {
+        question: "Where do applicants apply?",
+        answer:
+          "The official page points applicants to the nearest Estonian Embassy and says standard visa rules and procedures apply.",
+      },
+    ],
+  },
+  {
+    slug: "thailand-destination-thailand-visa-dtv-guide",
+    title: "Thailand Destination Thailand Visa: Remote Worker Planning Guide",
+    excerpt:
+      "A careful planning guide for the Destination Thailand Visa, with official eVisa source links and practical checks before relying on social-media summaries.",
+    category: "Asia",
+    author: "Nomad Visa Radar Editorial",
+    date: "2026-06-14",
+    updated: "2026-06-14",
+    readTime: "8 min read",
+    image: blogImages.remote,
+    imageAlt: "Remote worker planning a Thailand long-stay visa from a laptop",
+    keywords: [
+      "Destination Thailand Visa",
+      "Thailand DTV visa",
+      "Thailand digital nomad visa",
+      "Thailand remote worker visa",
+    ],
+    sources: [
+      {
+        label: "Official Thailand eVisa - Destination Thailand Visa",
+        url: "https://www.thaievisa.go.th/visa/dtv-visa",
+      },
+      {
+        label: "Official Thailand eVisa portal",
+        url: "https://www.thaievisa.go.th/",
+      },
+    ],
+    sections: [
+      {
+        heading: "Why DTV needs extra care",
+        body:
+          "Thailand's Destination Thailand Visa is one of the most discussed long-stay routes for remote workers, but it is also one of the easiest to misunderstand because summaries circulate faster than official updates. Treat the Thailand eVisa page as the starting point and confirm the document list after choosing your passport country and filing location.",
+      },
+      {
+        heading: "What to prepare before opening the application",
+        body:
+          "Applicants should prepare identity documents, recent financial evidence, remote-work or activity evidence, accommodation and travel context where requested, and any embassy-specific documents shown in the eVisa workflow. Keep filenames clear and make sure scans are legible before upload.",
+        bullets: [
+          "Passport biodata page and travel-history pages where requested.",
+          "Financial proof that matches the current eVisa instruction.",
+          "Employment, freelance, company, or portfolio evidence for the remote-work purpose.",
+          "A simple explanation of why your income remains outside Thailand.",
+          "Insurance and accommodation evidence if requested by the application flow.",
+        ],
+      },
+      {
+        heading: "Who Thailand fits best",
+        body:
+          "Thailand can fit remote workers who want a Southeast Asian base, strong coworking communities, and lower living costs than many Western hubs. It is less suitable if your work depends on Thai clients, if your financial evidence is thin, or if you need a route that leads directly to permanent residence.",
+      },
+      {
+        heading: "How to avoid outdated advice",
+        body:
+          "Before applying, check the official eVisa page, confirm your local embassy's document requirements, and save a PDF copy of the checklist you used. If a forum post conflicts with the eVisa workflow, use the official workflow.",
+      },
+    ],
+    faq: [
+      {
+        question: "Is the Destination Thailand Visa a standard tourist visa?",
+        answer:
+          "No. It is a specific eVisa category. Applicants should use Thailand's official eVisa page and follow the document list shown for their filing situation.",
+      },
+      {
+        question: "Can DTV holders work for Thai employers?",
+        answer:
+          "Do not assume local work is allowed. If your work involves Thai employers or local clients, verify the rule directly with official Thai sources before applying.",
+      },
+      {
+        question: "Should I rely on social-media DTV checklists?",
+        answer:
+          "Use them only as informal context. The official eVisa portal and embassy instructions should control your application file.",
+      },
+    ],
+  },
+  {
+    slug: "malta-nomad-residence-permit-official-guide",
+    title: "Malta Nomad Residence Permit: Official-Source Guide",
+    excerpt:
+      "A practical guide to Malta's Nomad Residence Permit for remote workers, with official source links and planning notes for families and freelancers.",
+    category: "Official Guides",
+    author: "Nomad Visa Radar Editorial",
+    date: "2026-06-14",
+    updated: "2026-06-14",
+    readTime: "8 min read",
+    image: blogImages.europe,
+    imageAlt: "Malta harbor view for a nomad residence permit guide",
+    keywords: [
+      "Malta Nomad Residence Permit",
+      "Malta digital nomad visa",
+      "Malta remote worker visa",
+      "Malta nomad permit requirements",
+    ],
+    sources: [
+      {
+        label: "Residency Malta Agency - Nomad Residence Permit",
+        url: "https://residencymalta.gov.mt/nomad-residence-permit/",
+      },
+      {
+        label: "Residency Malta Agency",
+        url: "https://residencymalta.gov.mt/",
+      },
+    ],
+    sections: [
+      {
+        heading: "Why Malta is different",
+        body:
+          "Malta is an English-speaking EU base with a formal Nomad Residence Permit route. The strongest applicants usually have clean foreign-client or foreign-employer evidence, stable income, and a realistic plan for housing, health insurance, and island living costs.",
+      },
+      {
+        heading: "The evidence to organize",
+        body:
+          "Use the official Residency Malta page as the source of truth. Before filing, organize your remote-work evidence, passport, insurance, accommodation plan, background documents, and dependent documents if your family is included.",
+        bullets: [
+          "Employment or freelance proof showing work can be performed remotely.",
+          "Evidence that the work and income are tied outside Malta.",
+          "Passport copies and identity documents.",
+          "Health insurance and accommodation evidence where required.",
+          "Family documents for dependents, with translations or legalization if requested.",
+        ],
+      },
+      {
+        heading: "Who Malta fits best",
+        body:
+          "Malta can work well for remote professionals who want English-language administration, EU access, Mediterranean lifestyle, and a smaller-country environment. It may feel expensive compared with lower-cost nomad hubs, so housing and school costs deserve early research.",
+      },
+      {
+        heading: "What to check before applying",
+        body:
+          "Check the current permit fee, income threshold, health-insurance wording, rental evidence, processing steps, and dependent rules on the official source before relying on any third-party summary.",
+      },
+    ],
+    faq: [
+      {
+        question: "Is Malta's route for employees and freelancers?",
+        answer:
+          "Malta's nomad route is designed for remote work. Employees, freelancers, and founders should verify the current proof category that fits their situation on the official Residency Malta page.",
+      },
+      {
+        question: "Is Malta cheap for digital nomads?",
+        answer:
+          "Not always. Malta can be convenient and English-speaking, but rent and school costs can be high compared with many remote-work destinations.",
+      },
+      {
+        question: "Can dependents be included?",
+        answer:
+          "Malta is often considered family-relevant, but dependent eligibility, fees, and documents should be checked on the official page before applying.",
+      },
+    ],
+  },
+  {
+    slug: "how-to-check-official-digital-nomad-visa-sources",
+    title: "How to Check Official Digital Nomad Visa Sources Before You Apply",
+    excerpt:
+      "A simple research method for avoiding outdated visa advice, fake checklists, and misleading social posts when comparing remote-work visas.",
+    category: "Research",
+    author: "Nomad Visa Radar Editorial",
+    date: "2026-06-14",
+    updated: "2026-06-14",
+    readTime: "9 min read",
+    image: blogImages.checklist,
+    imageAlt: "Laptop and notes used to verify official visa sources",
+    keywords: [
+      "official digital nomad visa sources",
+      "how to verify visa requirements",
+      "digital nomad visa checklist official",
+      "remote work visa research",
+    ],
+    sources: [
+      {
+        label: "Google AdSense eligibility guidance on original, high-quality content",
+        url: "https://support.google.com/adsense/answer/9724?hl=en",
+      },
+      {
+        label: "Google Search Console sitemap guidance",
+        url: "https://support.google.com/webmasters/answer/7451001?hl=en",
+      },
+    ],
+    sections: [
+      {
+        heading: "Start with the government page, not the headline",
+        body:
+          "Visa articles are useful for orientation, but the official government, ministry, consulate, or immigration portal should control the decision. Open that page first, note the date if one is shown, and save the exact URL you used.",
+      },
+      {
+        heading: "Check the filing location",
+        body:
+          "A rule can be national, but the practical checklist can still vary by consulate, embassy, or online eVisa workflow. If you are applying from London, New York, Dubai, Islamabad, or Singapore, check the local filing page rather than assuming a generic country summary is enough.",
+      },
+      {
+        heading: "Separate stable facts from moving facts",
+        body:
+          "Stable facts include the name of the route, whether it is aimed at remote workers, and whether local employment is excluded. Moving facts include income thresholds, fees, appointment availability, insurance wording, and document validity windows.",
+      },
+      {
+        heading: "Build a source trail",
+        body:
+          "For each country, keep a small record: official URL, date checked, income rule, document list, dependents rule, tax note, and any unanswered questions. This avoids mixing old screenshots, forum anecdotes, and current official instructions.",
+        bullets: [
+          "Save the official source URL and date checked.",
+          "Copy the exact route name used by the government page.",
+          "Record whether income must be salary, freelance, company profit, savings, or a mix.",
+          "Check whether dependents can join and whether they add income requirements.",
+          "Check whether local employment or local clients are restricted.",
+          "Flag anything tax-related for professional advice instead of guessing.",
+        ],
+      },
+    ],
+    faq: [
+      {
+        question: "Are official pages always up to date?",
+        answer:
+          "They are the best source, but not always perfect. If a consulate page and ministry page differ, contact the consulate or use the application portal instructions for your filing location.",
+      },
+      {
+        question: "Can I use AI or blogs to prepare my visa file?",
+        answer:
+          "Use them for orientation, not as final authority. Your application should be built from the official checklist and your own facts.",
+      },
+      {
+        question: "Why do visa requirements differ between websites?",
+        answer:
+          "Many pages repeat old thresholds or summarize rules from a different consulate. Always check the official source and the date of the article.",
       },
     ],
   },

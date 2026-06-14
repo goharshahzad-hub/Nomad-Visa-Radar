@@ -66,7 +66,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t px-4 py-5 text-center text-xs text-muted-foreground">
-        © 2026 Nomad Visa Radar. Information is editorial and not legal or tax advice.
+        (c) 2026 Nomad Visa Radar. Information is editorial and not legal or tax advice.
       </div>
     </footer>
   );
