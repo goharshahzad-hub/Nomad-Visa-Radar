@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 });
 
 const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?.trim();
-const googleAnalyticsId = "G-3WFC1T0E14";
+const googleAnalyticsId = "G-Y99W1DHQK4";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
