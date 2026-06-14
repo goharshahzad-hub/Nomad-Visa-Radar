@@ -121,6 +121,7 @@ export default async function CountriesPage({
   const family = params.family === "true";
   const tax = params.tax === "true";
   const applyingFrom = params.applyingFrom?.trim() || "United States";
+  const hasActiveFilters = Boolean(q || region || income || duration || family || tax || params.applyingFrom?.trim());
 
   const filtered = countries.filter((country) => {
     const matchesQuery =
@@ -145,6 +146,9 @@ export default async function CountriesPage({
 
     return matchesQuery && matchesRegion && matchesIncome && matchesDuration && matchesFamily && matchesTax;
   });
+  const visibleLimit = hasActiveFilters ? 36 : 24;
+  const visibleCountries = filtered.slice(0, visibleLimit);
+  const remainingCount = Math.max(filtered.length - visibleCountries.length, 0);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
@@ -229,16 +233,37 @@ export default async function CountriesPage({
       </form>
       <div className="mt-6 flex flex-col gap-2 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
         <p>
-          Showing <span className="font-medium text-foreground">{filtered.length}</span> of{" "}
-          <span className="font-medium text-foreground">{countries.length}</span> tracked digital nomad, remote worker, and freelancer visa countries.
+          Showing <span className="font-medium text-foreground">{visibleCountries.length}</span>
+          {remainingCount > 0 ? (
+            <>
+              {" "}of <span className="font-medium text-foreground">{filtered.length}</span> matching programs
+            </>
+          ) : (
+            <>
+              {" "}matching programs
+            </>
+          )}
+          {" "}from <span className="font-medium text-foreground">{countries.length}</span> tracked digital nomad, remote worker, and freelancer visa countries.
         </p>
-        <p>Filters update the same complete country database used across the homepage and compare tool.</p>
+        <p>
+          {remainingCount > 0
+            ? "Use search or filters to narrow the complete database."
+            : "Filters update the same complete country database used across the homepage and compare tool."}
+        </p>
       </div>
       <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {filtered.map((country) => (
+        {visibleCountries.map((country) => (
           <CountryDirectoryCard key={country.slug} country={country} applyingFrom={applyingFrom} />
         ))}
       </div>
+      {remainingCount > 0 && (
+        <Card className="mt-8 p-6 text-center">
+          <h2 className="text-xl font-semibold">{remainingCount} more programs available</h2>
+          <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-muted-foreground">
+            Search a country name, choose a region, or adjust income and family filters to narrow the full directory without loading every card at once.
+          </p>
+        </Card>
+      )}
       {filtered.length === 0 && (
         <Card className="mt-8 p-8 text-center">
           <h2 className="text-xl font-semibold">No matching visa programs</h2>
