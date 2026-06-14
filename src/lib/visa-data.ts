@@ -209,26 +209,6 @@ const flagCodes: Record<string, string> = {
   "saint-lucia": "lc",
 };
 
-export const applicantCountries = [
-  "United States",
-  "Canada",
-  "United Kingdom",
-  "Australia",
-  "India",
-  "Pakistan",
-  "United Arab Emirates",
-  "Germany",
-  "France",
-  "Netherlands",
-  "Portugal",
-  "Spain",
-  "Italy",
-  "Brazil",
-  "Mexico",
-  "South Africa",
-  "Singapore",
-];
-
 function countryImage(countryName: string) {
   const slug = slugify(countryName);
   return getCountryFlagImage(slug) ?? `/country-visuals/${slug}?v=flag-cover-3`;
@@ -758,10 +738,6 @@ function usd(value: number) {
   }).format(value);
 }
 
-function usdRange(low: number, high: number) {
-  return `${usd(Math.max(0, Math.round(low / 5) * 5))}-${usd(Math.max(0, Math.round(high / 5) * 5))}`;
-}
-
 function looksVariable(value: string) {
   return /varies|vary|case-by-case|proof|sufficient|substantial|no standard|not listed|depends/i.test(value);
 }
@@ -781,22 +757,8 @@ export function formatMinimumIncomeRequirement(country: Pick<VisaCountry, "minim
   return `${country.minimumIncome} (approx ${usd(monthly)}/month; ${usd(annual)}/year)`;
 }
 
-export function formatVisaFeeEstimate(country: Pick<VisaCountry, "visaFee" | "visaFeeUsd">) {
-  if (country.visaFeeUsd <= 0) {
-    return `${country.visaFee}; estimated government fee ${usd(0)}`;
-  }
-
-  if (looksVariable(country.visaFee)) {
-    const low = country.visaFeeUsd < 150 ? Math.max(25, country.visaFeeUsd * 0.7) : country.visaFeeUsd * 0.75;
-    const high = country.visaFeeUsd < 150 ? country.visaFeeUsd * 1.8 : country.visaFeeUsd * 1.35;
-    return `${country.visaFee}; estimated range ${usdRange(low, high)}`;
-  }
-
-  if (/usd|\$/i.test(country.visaFee)) {
-    return country.visaFee;
-  }
-
-  return `${country.visaFee}; approx ${usd(country.visaFeeUsd)}`;
+export function formatVisaFeeEstimate(country: Pick<VisaCountry, "visaFee">) {
+  return country.visaFee;
 }
 
 export function getDocumentsRequired(country: VisaCountry) {
@@ -829,19 +791,6 @@ export function getDocumentsRequired(country: VisaCountry) {
   }
 
   return Array.from(documents);
-}
-
-export function formatVisaFeeForApplicant(
-  country: Pick<VisaCountry, "countryName" | "visaFee"> & Partial<Pick<VisaCountry, "visaFeeUsd">>,
-  applicantCountry = "United States",
-) {
-  const residence = applicantCountry.trim() || "your residence country";
-  const feeText =
-    "visaFeeUsd" in country && typeof country.visaFeeUsd === "number"
-      ? formatVisaFeeEstimate(country as Pick<VisaCountry, "visaFee" | "visaFeeUsd">)
-      : country.visaFee;
-
-  return `${feeText} (${country.countryName}; applying from ${residence})`;
 }
 
 export function getOfficialVisaInformationUrl(country: Pick<VisaCountry, "applicationUrl" | "officialGovernmentUrl">) {

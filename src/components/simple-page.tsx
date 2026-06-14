@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { ShareActions } from "@/components/share-actions";
 
 export function SimplePage({
   eyebrow,
@@ -15,6 +16,11 @@ export function SimplePage({
       <h1 className="mt-4 text-3xl font-semibold tracking-normal sm:text-4xl">
         {title}
       </h1>
+      <ShareActions
+        title={`${title} | Nomad Visa Radar`}
+        text={`Read ${title} on Nomad Visa Radar.`}
+        className="mt-5"
+      />
       <div className="mt-7 space-y-5 text-base leading-8 text-muted-foreground sm:mt-8">
         {children}
       </div>

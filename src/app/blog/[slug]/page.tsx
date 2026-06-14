@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { NewsletterForm } from "@/components/newsletter-form";
+import { ShareActions } from "@/components/share-actions";
 import { blogPosts, getAuthorProfile } from "@/lib/visa-data";
 import { siteConfig } from "@/lib/site";
 import { slugify } from "@/lib/utils";
@@ -124,6 +125,12 @@ export default async function BlogPostPage({
                 </span>
               ))}
             </div>
+            <ShareActions
+              title={post.title}
+              text={post.excerpt}
+              url={`${siteConfig.url}/blog/${post.slug}`}
+              className="mt-6"
+            />
           </div>
           <div className="relative min-h-72 overflow-hidden rounded-lg border">
             <Image
@@ -206,6 +213,19 @@ export default async function BlogPostPage({
               </div>
             ))}
           </div>
+        </Card>
+
+        <Card className="mt-10 p-6">
+          <h2 className="text-2xl font-semibold">Share this guide</h2>
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">
+            Send this article to a remote worker, teammate, or family member comparing visa options.
+          </p>
+          <ShareActions
+            title={post.title}
+            text={post.excerpt}
+            url={`${siteConfig.url}/blog/${post.slug}`}
+            className="mt-5"
+          />
         </Card>
 
         <div className="mt-10 rounded-lg border bg-card p-6 text-center">

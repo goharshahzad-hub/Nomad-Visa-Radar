@@ -4,7 +4,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { ShareActions } from "@/components/share-actions";
 import { blogPosts, getAuthorProfile } from "@/lib/visa-data";
+import { siteConfig } from "@/lib/site";
 import { titleCaseFromSlug, slugify } from "@/lib/utils";
 
 export async function generateMetadata({
@@ -45,6 +47,12 @@ export default async function AuthorPage({
       </h1>
       <p className="mt-2 text-lg font-medium text-primary">{profile.role}</p>
       <p className="mt-3 max-w-3xl leading-8 text-muted-foreground">{profile.bio}</p>
+      <ShareActions
+        title={`${profile.name} author profile`}
+        text={profile.bio}
+        url={`${siteConfig.url}/author/${author}`}
+        className="mt-5"
+      />
       <div className="mt-6 grid gap-4 md:grid-cols-[1fr_1.2fr]">
         <Card className="p-5">
           <h2 className="font-semibold">Research focus</h2>
@@ -63,8 +71,8 @@ export default async function AuthorPage({
       </div>
       <div className="mt-8 grid gap-5 md:grid-cols-2">
         {posts.map((post) => (
-          <Link key={post.slug} href={`/blog/${post.slug}`}>
-            <Card className="overflow-hidden hover:bg-muted/40">
+          <Card key={post.slug} className="flex flex-col overflow-hidden hover:bg-muted/40">
+            <Link href={`/blog/${post.slug}`} className="block flex-1">
               <div className="relative h-40">
                 <Image
                   src={post.image}
@@ -78,8 +86,16 @@ export default async function AuthorPage({
                 <h2 className="font-semibold">{post.title}</h2>
                 <p className="mt-2 text-sm text-muted-foreground">{post.excerpt}</p>
               </div>
-            </Card>
-          </Link>
+            </Link>
+            <div className="border-t px-6 py-3">
+              <ShareActions
+                title={post.title}
+                text={post.excerpt}
+                url={`${siteConfig.url}/blog/${post.slug}`}
+                compact
+              />
+            </div>
+          </Card>
         ))}
       </div>
     </div>

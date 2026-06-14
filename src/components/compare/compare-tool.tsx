@@ -2,12 +2,11 @@
 
 import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { Download, Link2, Plus, Trophy, X } from "lucide-react";
-import { toast } from "sonner";
+import { Download, Plus, Trophy, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CountryFlag } from "@/components/country-flag";
-import { Input } from "@/components/ui/input";
+import { ShareActions } from "@/components/share-actions";
 import {
   Table,
   TableBody,
@@ -16,18 +15,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  applicantCountries,
-  countries,
-  formatMinimumIncomeRequirement,
-  formatVisaFeeForApplicant,
-  VisaCountry,
-} from "@/lib/visa-data";
+import { countries, formatMinimumIncomeRequirement, formatVisaFeeEstimate, VisaCountry } from "@/lib/visa-data";
 import { formatCurrency } from "@/lib/utils";
 
-const rows: [string, (country: VisaCountry, applyingFrom: string) => string | number][] = [
+const rows: [string, (country: VisaCountry) => string | number][] = [
   ["Income requirement", (country) => formatMinimumIncomeRequirement(country)],
-  ["Visa fee", (country, applyingFrom) => formatVisaFeeForApplicant(country, applyingFrom)],
+  ["Visa fee", (country) => formatVisaFeeEstimate(country)],
   ["Duration", (country) => country.duration],
   ["Renewability", (country) => (country.renewable ? "Renewable" : "Limited")],
   ["Dependents", (country) => (country.dependentsAllowed ? "Allowed" : "Not usually")],
@@ -74,13 +67,15 @@ function badgesFor(selected: VisaCountry[]) {
 
 export function CompareTool({ initial = [] }: { initial?: VisaCountry[] }) {
   const [selected, setSelected] = useState<VisaCountry[]>(initial.slice(0, 6));
-  const [applyingFrom, setApplyingFrom] = useState("United States");
   const tableRef = useRef<HTMLDivElement>(null);
   const badgeMap = useMemo(() => badgesFor(selected), [selected]);
   const available = countries.filter(
     (country) => !selected.some((item) => item.slug === country.slug),
   );
   const sharePath = `/compare/${selected.map((country) => country.slug).join("-vs-")}`;
+  const shareTitle = selected.length
+    ? `${selected.map((country) => country.countryName).join(" vs ")} visa comparison`
+    : "Digital nomad visa comparison";
 
   function addCountry(slug: string) {
     const country = countries.find((item) => item.slug === slug);
@@ -91,12 +86,6 @@ export function CompareTool({ initial = [] }: { initial?: VisaCountry[] }) {
 
   function removeCountry(slug: string) {
     setSelected(selected.filter((country) => country.slug !== slug));
-  }
-
-  async function copyShareUrl() {
-    const url = `${window.location.origin}${sharePath}`;
-    await navigator.clipboard.writeText(url);
-    toast.success("Share URL copied.");
   }
 
   async function exportPdf() {
@@ -122,20 +111,6 @@ export function CompareTool({ initial = [] }: { initial?: VisaCountry[] }) {
             </p>
           </div>
           <div className="grid gap-2 sm:flex sm:flex-wrap">
-            <div>
-              <Input
-                list="compare-applying-from"
-                value={applyingFrom}
-                onChange={(event) => setApplyingFrom(event.target.value)}
-                placeholder="Applying from"
-                className="h-10 sm:w-44"
-              />
-              <datalist id="compare-applying-from">
-                {applicantCountries.map((countryName) => (
-                  <option key={countryName} value={countryName} />
-                ))}
-              </datalist>
-            </div>
             <select
               aria-label="Add country"
               disabled={selected.length >= 6}
@@ -152,10 +127,15 @@ export function CompareTool({ initial = [] }: { initial?: VisaCountry[] }) {
                 </option>
               ))}
             </select>
-            <Button variant="outline" onClick={copyShareUrl} disabled={!selected.length} className="w-full sm:w-auto">
-              <Link2 className="h-4 w-4" />
-              Share
-            </Button>
+            {selected.length > 0 && (
+              <ShareActions
+                title={shareTitle}
+                text="Compare digital nomad visa requirements, fees, family support, taxes, and quality-of-life scores."
+                url={sharePath}
+                compact
+                className="rounded-md border bg-background/70 p-1"
+              />
+            )}
             <Button onClick={exportPdf} disabled={!selected.length} className="w-full sm:w-auto">
               <Download className="h-4 w-4" />
               PDF
@@ -191,40 +171,48 @@ export function CompareTool({ initial = [] }: { initial?: VisaCountry[] }) {
             <div className="md:hidden">
               <div className="grid gap-3">
                 {selected.map((country) => (
-                  <Link
+                  <div
                     key={country.slug}
-                    href={`/digital-nomad-visa/${country.slug}`}
-                    className="block rounded-md border bg-background/60 p-4 hover:bg-muted/60"
+                    className="rounded-md border bg-background/60 p-4 hover:bg-muted/60"
                   >
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <p className="flex items-center gap-2 font-semibold">
-                          <CountryFlag country={country} />
-                          {country.countryName}
-                        </p>
-                        <p className="mt-1 text-sm text-muted-foreground">
-                          {country.visaProgramName}
-                        </p>
+                    <Link href={`/digital-nomad-visa/${country.slug}`} className="block">
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <p className="flex items-center gap-2 font-semibold">
+                            <CountryFlag country={country} />
+                            {country.countryName}
+                          </p>
+                          <p className="mt-1 text-sm text-muted-foreground">
+                            {country.visaProgramName}
+                          </p>
+                        </div>
+                        <Badge variant="success">{country.nomadScore}</Badge>
                       </div>
-                      <Badge variant="success">{country.nomadScore}</Badge>
-                    </div>
-                    <div className="mt-4 grid gap-2 text-sm">
-                      <div className="flex justify-between gap-3">
-                        <span className="text-muted-foreground">Income</span>
-                        <span className="text-right font-medium">{formatMinimumIncomeRequirement(country)}</span>
+                      <div className="mt-4 grid gap-2 text-sm">
+                        <div className="flex justify-between gap-3">
+                          <span className="text-muted-foreground">Income</span>
+                          <span className="text-right font-medium">{formatMinimumIncomeRequirement(country)}</span>
+                        </div>
+                        <div className="flex justify-between gap-3">
+                          <span className="text-muted-foreground">Fee</span>
+                          <span className="text-right font-medium">
+                            {formatVisaFeeEstimate(country)}
+                          </span>
+                        </div>
+                        <div className="flex justify-between gap-3">
+                          <span className="text-muted-foreground">Processing</span>
+                          <span className="text-right font-medium">{country.processingTime}</span>
+                        </div>
                       </div>
-                      <div className="flex justify-between gap-3">
-                        <span className="text-muted-foreground">Fee</span>
-                        <span className="text-right font-medium">
-                          {formatVisaFeeForApplicant(country, applyingFrom)}
-                        </span>
-                      </div>
-                      <div className="flex justify-between gap-3">
-                        <span className="text-muted-foreground">Processing</span>
-                        <span className="text-right font-medium">{country.processingTime}</span>
-                      </div>
-                    </div>
-                  </Link>
+                    </Link>
+                    <ShareActions
+                      title={`${country.countryName} digital nomad visa`}
+                      text={`Share ${country.countryName} visa requirements from this comparison.`}
+                      url={`/digital-nomad-visa/${country.slug}`}
+                      compact
+                      className="mt-4 border-t pt-3"
+                    />
+                  </div>
                 ))}
               </div>
               <p className="mt-3 text-xs text-muted-foreground">
@@ -270,7 +258,7 @@ export function CompareTool({ initial = [] }: { initial?: VisaCountry[] }) {
                           href={`/digital-nomad-visa/${country.slug}`}
                           className="block rounded-sm hover:text-primary"
                         >
-                          {getter(country, applyingFrom)}
+                          {getter(country)}
                         </Link>
                       </TableCell>
                     ))}

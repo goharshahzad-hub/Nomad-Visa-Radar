@@ -4,7 +4,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { ShareActions } from "@/components/share-actions";
 import { blogPosts } from "@/lib/visa-data";
+import { siteConfig } from "@/lib/site";
 import { slugify } from "@/lib/utils";
 
 export function generateStaticParams() {
@@ -52,10 +54,16 @@ export default async function CategoryPage({
       <p className="mt-3 max-w-2xl text-muted-foreground">
         Focused guides for this topic, built from the same official-source review model as the country pages.
       </p>
+      <ShareActions
+        title={`${posts[0].category} digital nomad visa articles`}
+        text={`Read ${posts[0].category} digital nomad visa guides on Nomad Visa Radar.`}
+        url={`${siteConfig.url}/blog/category/${category}`}
+        className="mt-5"
+      />
       <div className="mt-8 grid gap-5 md:grid-cols-2">
         {posts.map((post) => (
-          <Link key={post.slug} href={`/blog/${post.slug}`}>
-            <Card className="overflow-hidden hover:bg-muted/40">
+          <Card key={post.slug} className="flex flex-col overflow-hidden hover:bg-muted/40">
+            <Link href={`/blog/${post.slug}`} className="block flex-1">
               <div className="relative h-40">
                 <Image
                   src={post.image}
@@ -69,8 +77,16 @@ export default async function CategoryPage({
                 <h2 className="font-semibold">{post.title}</h2>
                 <p className="mt-2 text-sm text-muted-foreground">{post.excerpt}</p>
               </div>
-            </Card>
-          </Link>
+            </Link>
+            <div className="border-t px-6 py-3">
+              <ShareActions
+                title={post.title}
+                text={post.excerpt}
+                url={`${siteConfig.url}/blog/${post.slug}`}
+                compact
+              />
+            </div>
+          </Card>
         ))}
       </div>
     </div>

@@ -17,9 +17,9 @@ import { CountryCard } from "@/components/country-card";
 import { CountryFlag } from "@/components/country-flag";
 import { InteractiveWorldMap } from "@/components/interactive-world-map";
 import { NewsletterForm } from "@/components/newsletter-form";
+import { ShareActions } from "@/components/share-actions";
 import {
   asiaCountries,
-  applicantCountries,
   blogPosts,
   cheapestVisas,
   countries,
@@ -106,6 +106,12 @@ export function HomePage() {
                 Compare visas
               </Link>
             </div>
+            <ShareActions
+              title="Nomad Visa Radar"
+              text="Search and compare digital nomad visa requirements worldwide."
+              url="/"
+              className="mt-5"
+            />
           </motion.div>
 
           <motion.div
@@ -128,7 +134,7 @@ export function HomePage() {
                     placeholder="Search Portugal, Thailand, Colombia..."
                   />
                 </div>
-                <div className="grid gap-2 sm:grid-cols-4">
+                <div className="grid gap-2 sm:grid-cols-3">
                   <select
                     name="region"
                     aria-label="Region"
@@ -161,20 +167,6 @@ export function HomePage() {
                     <option value="one-year">Around 1 year</option>
                     <option value="long">Long stay</option>
                   </select>
-                  <div>
-                    <input
-                      name="applyingFrom"
-                      list="home-applying-from"
-                      className="h-10 w-full rounded-md border bg-background/80 px-3 text-xs font-medium text-muted-foreground outline-none focus:ring-2 focus:ring-ring"
-                      placeholder="Applying from"
-                      defaultValue="United States"
-                    />
-                    <datalist id="home-applying-from">
-                      {applicantCountries.map((countryName) => (
-                        <option key={countryName} value={countryName} />
-                      ))}
-                    </datalist>
-                  </div>
                 </div>
                 <div className="grid gap-2 sm:grid-cols-[1fr_1fr_auto]">
                   <label className="flex h-10 items-center gap-2 rounded-md border bg-background/80 px-3 text-xs font-medium text-muted-foreground">
@@ -221,23 +213,28 @@ export function HomePage() {
           />
           <div className="mt-10 grid gap-4 md:grid-cols-3">
             {cheapestVisas.map((country) => (
-              <Link
-                key={country.slug}
-                href={`/digital-nomad-visa/${country.slug}`}
-                className="rounded-lg border bg-card p-5 transition hover:-translate-y-1 hover:shadow-xl"
-              >
-                <div className="flex items-center justify-between">
-                  <CountryFlag country={country} className="h-7 w-10 rounded-md" />
-                  <Badge variant="success">{formatCurrency(country.visaFeeUsd)}</Badge>
-                </div>
-                <h3 className="mt-4 font-semibold">{country.countryName}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  {country.visaProgramName}
-                </p>
-                <p className="mt-3 text-xs font-medium text-muted-foreground">
-                  Fee estimate: {formatVisaFeeEstimate(country)} ({country.countryName})
-                </p>
-              </Link>
+              <Card key={country.slug} className="flex flex-col p-5 transition hover:-translate-y-1 hover:shadow-xl">
+                <Link href={`/digital-nomad-visa/${country.slug}`} className="block flex-1">
+                  <div className="flex items-center justify-between">
+                    <CountryFlag country={country} className="h-7 w-10 rounded-md" />
+                    <Badge variant="success">{formatCurrency(country.visaFeeUsd)}</Badge>
+                  </div>
+                  <h3 className="mt-4 font-semibold">{country.countryName}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    {country.visaProgramName}
+                  </p>
+                  <p className="mt-3 text-xs font-medium text-muted-foreground">
+                    Visa fee: {formatVisaFeeEstimate(country)}
+                  </p>
+                </Link>
+                <ShareActions
+                  title={`${country.countryName} digital nomad visa`}
+                  text={`Share ${country.countryName} low-fee digital nomad visa details.`}
+                  url={`/digital-nomad-visa/${country.slug}`}
+                  compact
+                  className="mt-4 border-t pt-3"
+                />
+              </Card>
             ))}
           </div>
         </div>
@@ -268,7 +265,15 @@ export function HomePage() {
                       </a>
                     </div>
                   </div>
-                  <Badge variant="gold">{update.confidence}%</Badge>
+                  <div className="flex flex-col items-start gap-3 sm:items-end">
+                    <Badge variant="gold">{update.confidence}%</Badge>
+                    <ShareActions
+                      title={update.title}
+                      text={update.summary}
+                      url={`/latest-updates#${update.slug}`}
+                      compact
+                    />
+                  </div>
                 </div>
               </Card>
             ))}
@@ -331,18 +336,27 @@ export function HomePage() {
           </div>
           <div className="grid gap-5 md:grid-cols-3">
             {blogPosts.map((post) => (
-              <Link key={post.slug} href={`/blog/${post.slug}`} className="rounded-lg border bg-card p-6 transition hover:-translate-y-1 hover:shadow-xl">
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <Clock3 className="h-4 w-4" />
-                  {post.readTime}
-                </div>
-                <h3 className="mt-4 text-lg font-semibold">{post.title}</h3>
-                <p className="mt-3 text-sm leading-6 text-muted-foreground">{post.excerpt}</p>
-                <div className="mt-5 flex items-center gap-2 text-sm font-medium text-primary">
-                  <ShieldCheck className="h-4 w-4" />
-                  Reviewed content
-                </div>
-              </Link>
+              <Card key={post.slug} className="flex flex-col p-6 transition hover:-translate-y-1 hover:shadow-xl">
+                <Link href={`/blog/${post.slug}`} className="block flex-1">
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Clock3 className="h-4 w-4" />
+                    {post.readTime}
+                  </div>
+                  <h3 className="mt-4 text-lg font-semibold">{post.title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-muted-foreground">{post.excerpt}</p>
+                  <div className="mt-5 flex items-center gap-2 text-sm font-medium text-primary">
+                    <ShieldCheck className="h-4 w-4" />
+                    Reviewed content
+                  </div>
+                </Link>
+                <ShareActions
+                  title={post.title}
+                  text={post.excerpt}
+                  url={`/blog/${post.slug}`}
+                  compact
+                  className="mt-4 border-t pt-3"
+                />
+              </Card>
             ))}
           </div>
         </div>

@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CompareTool } from "@/components/compare/compare-tool";
+import { ShareActions } from "@/components/share-actions";
 import { Badge } from "@/components/ui/badge";
 import { getCompareCountries } from "@/lib/visa-data";
+import { siteConfig } from "@/lib/site";
 
 export async function generateMetadata({
   params,
@@ -44,6 +46,12 @@ export default async function CompareSlugPage({
         <p className="mt-4 text-lg leading-8 text-muted-foreground">
           Compare remote worker visa requirements and lifestyle scores using a shareable URL.
         </p>
+        <ShareActions
+          title={`${selected.map((country) => country.countryName).join(" vs ")} visa comparison`}
+          text="Compare remote worker visa requirements and lifestyle scores on Nomad Visa Radar."
+          url={`${siteConfig.url}/compare/${slug}`}
+          className="mt-5"
+        />
       </div>
       <CompareTool initial={selected} />
     </div>

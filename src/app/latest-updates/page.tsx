@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowUpRight, Bell, FileCheck2, PlusCircle, RefreshCcw, XCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { ShareActions } from "@/components/share-actions";
 import { latestUpdates } from "@/lib/visa-data";
 import { siteConfig } from "@/lib/site";
 
@@ -45,6 +46,12 @@ export default function LatestUpdatesPage() {
         <p className="mt-4 text-lg leading-8 text-muted-foreground">
           A public changelog for new countries, removed programs, fee changes, requirements, and daily official-source checks. Updates are never auto-published without admin review.
         </p>
+        <ShareActions
+          title="Latest digital nomad visa updates"
+          text="Track official-source digital nomad visa updates on Nomad Visa Radar."
+          url={`${siteConfig.url}/latest-updates`}
+          className="mt-5"
+        />
       </div>
 
       <div className="mt-10 grid gap-5">
@@ -80,6 +87,12 @@ export default function LatestUpdatesPage() {
                     >
                       Country guide
                     </Link>
+                    <ShareActions
+                      title={update.title}
+                      text={update.summary}
+                      url={`${siteConfig.url}/latest-updates#${update.slug}`}
+                      compact
+                    />
                   </div>
                   <div className="mt-5 rounded-md border bg-muted/40 p-4">
                     <p className="text-sm font-medium">Official statement / source basis</p>

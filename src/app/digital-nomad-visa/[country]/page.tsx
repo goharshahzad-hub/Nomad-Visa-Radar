@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { ShareActions } from "@/components/share-actions";
 import { NewsletterForm } from "@/components/newsletter-form";
 import { VisaFeeCard } from "@/components/visa-fee-card";
 import { CountryHighlightsSlider } from "@/components/country-highlights-slider";
@@ -183,6 +184,12 @@ export default async function CountryPage({
             <p className="mt-5 max-w-3xl text-lg leading-8 text-muted-foreground">
               {country.visaProgramName} requirements, eligibility, documents, taxes, application process, and official source links.
             </p>
+            <ShareActions
+              title={`${country.countryName} digital nomad visa`}
+              text={`${country.visaProgramName} requirements, eligibility, documents, and official source links.`}
+              url={`${siteConfig.url}/digital-nomad-visa/${country.slug}`}
+              className="mt-6"
+            />
           </div>
         </div>
       </section>
@@ -346,6 +353,20 @@ export default async function CountryPage({
             >
               Open official visa information page <ArrowUpRight className="h-4 w-4" />
             </a>
+          </Card>
+
+          <Card className="p-5">
+            <h2 className="text-lg font-semibold">Share this country guide</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Send this visa page to a teammate, client, or family member.
+            </p>
+            <ShareActions
+              title={`${country.countryName} digital nomad visa`}
+              text={`${country.countryName} visa requirements and official-source guidance.`}
+              url={`${siteConfig.url}/digital-nomad-visa/${country.slug}`}
+              compact
+              className="mt-4"
+            />
           </Card>
 
           <Card className="p-5">

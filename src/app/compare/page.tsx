@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { CompareTool } from "@/components/compare/compare-tool";
+import { ShareActions } from "@/components/share-actions";
 import { Badge } from "@/components/ui/badge";
 import { countries } from "@/lib/visa-data";
+import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Compare Digital Nomad Visas",
@@ -23,6 +25,12 @@ export default function ComparePage() {
         <p className="mt-4 text-lg leading-8 text-muted-foreground">
           Build a side-by-side view for income, fees, renewability, dependents, taxes, internet, cost of living, safety, healthcare, quality of life, and Nomad Score.
         </p>
+        <ShareActions
+          title="Compare digital nomad visas"
+          text="Build and share digital nomad visa comparisons on Nomad Visa Radar."
+          url={`${siteConfig.url}/compare`}
+          className="mt-5"
+        />
       </div>
       <CompareTool initial={countries.slice(0, 3)} />
     </div>

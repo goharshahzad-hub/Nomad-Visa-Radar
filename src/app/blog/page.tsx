@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Clock3 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { ShareActions } from "@/components/share-actions";
 import { blogPosts } from "@/lib/visa-data";
 import { siteConfig } from "@/lib/site";
 import { slugify } from "@/lib/utils";
@@ -56,6 +57,12 @@ export default function BlogPage() {
       <p className="mt-4 max-w-3xl text-lg leading-8 text-muted-foreground">
         Practical guides for comparing visa requirements, tax notes, family planning, country costs, and remote-work relocation choices.
       </p>
+      <ShareActions
+        title="Digital nomad visa articles"
+        text="Browse digital nomad visa guides on Nomad Visa Radar."
+        url={`${siteConfig.url}/blog`}
+        className="mt-5"
+      />
       <div className="mt-6 flex flex-wrap gap-2">
         {categories.map((category) => (
           <Link
@@ -69,40 +76,48 @@ export default function BlogPage() {
       </div>
       <div className="mt-8 grid gap-5 md:grid-cols-3">
         {blogPosts.map((post) => (
-          <Link key={post.slug} href={`/blog/${post.slug}`}>
-            <Card className="h-full overflow-hidden transition hover:-translate-y-1 hover:shadow-xl">
+          <Card key={post.slug} className="flex h-full flex-col overflow-hidden transition hover:-translate-y-1 hover:shadow-xl">
+            <Link href={`/blog/${post.slug}`} className="block flex-1">
               <div className="relative h-44">
-                <Image
-                  src={post.image}
-                  alt={post.imageAlt}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover"
+                  <Image
+                    src={post.image}
+                    alt={post.imageAlt}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent" />
+                  <Badge variant="status" className="absolute left-4 top-4">
+                    {post.category}
+                  </Badge>
+                </div>
+                <div className="p-6 pb-3">
+                  <h2 className="text-xl font-semibold">{post.title}</h2>
+                  <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                    {post.excerpt}
+                  </p>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {post.keywords.slice(0, 2).map((keyword) => (
+                      <span key={keyword} className="rounded-md bg-muted px-2 py-1 text-xs text-muted-foreground">
+                        {keyword}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="mt-6 flex items-center gap-2 text-sm text-muted-foreground">
+                    <Clock3 className="h-4 w-4" />
+                    {post.readTime} - {post.date}
+                  </div>
+                </div>
+              </Link>
+              <div className="border-t px-6 py-3">
+                <ShareActions
+                  title={post.title}
+                  text={post.excerpt}
+                  url={`${siteConfig.url}/blog/${post.slug}`}
+                  compact
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent" />
-                <Badge variant="status" className="absolute left-4 top-4">
-                  {post.category}
-                </Badge>
-              </div>
-              <div className="p-6">
-                <h2 className="text-xl font-semibold">{post.title}</h2>
-                <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                  {post.excerpt}
-                </p>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {post.keywords.slice(0, 2).map((keyword) => (
-                    <span key={keyword} className="rounded-md bg-muted px-2 py-1 text-xs text-muted-foreground">
-                      {keyword}
-                    </span>
-                  ))}
-                </div>
-                <div className="mt-6 flex items-center gap-2 text-sm text-muted-foreground">
-                  <Clock3 className="h-4 w-4" />
-                  {post.readTime} - {post.date}
-                </div>
               </div>
             </Card>
-          </Link>
         ))}
       </div>
       <script

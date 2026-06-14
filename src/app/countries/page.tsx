@@ -2,16 +2,17 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight, Clock3, DollarSign, ShieldCheck, Users } from "lucide-react";
 import { CountryFlag } from "@/components/country-flag";
+import { ShareActions } from "@/components/share-actions";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
-  applicantCountries,
   countries,
-  formatVisaFeeForApplicant,
+  formatVisaFeeEstimate,
   type VisaCountry,
 } from "@/lib/visa-data";
+import { siteConfig } from "@/lib/site";
 import { cn, formatCurrency } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -25,78 +26,86 @@ export const metadata: Metadata = {
 
 function CountryDirectoryCard({
   country,
-  applyingFrom,
 }: {
   country: VisaCountry;
-  applyingFrom: string;
 }) {
+  const href = `/digital-nomad-visa/${country.slug}`;
+
   return (
-    <Link
-      href={`/digital-nomad-visa/${country.slug}`}
-      className="group block h-full rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-    >
-      <Card className="flex h-full flex-col p-5 transition hover:-translate-y-0.5 hover:shadow-lg">
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex min-w-0 items-start gap-3">
-            <CountryFlag country={country} className="mt-1 h-6 w-9" />
-            <div className="min-w-0">
-              <h2 className="truncate text-lg font-semibold">{country.countryName}</h2>
-              <p className="mt-1 line-clamp-2 text-sm leading-6 text-muted-foreground">
-                {country.visaProgramName}
-              </p>
+      <Card className="group flex h-full flex-col p-5 transition hover:-translate-y-0.5 hover:shadow-lg">
+        <Link
+          href={href}
+          className="block flex-1 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex min-w-0 items-start gap-3">
+              <CountryFlag country={country} className="mt-1 h-6 w-9" />
+              <div className="min-w-0">
+                <h2 className="truncate text-lg font-semibold">{country.countryName}</h2>
+                <p className="mt-1 line-clamp-2 text-sm leading-6 text-muted-foreground">
+                  {country.visaProgramName}
+                </p>
+              </div>
+            </div>
+            <span className="rounded-md bg-muted px-2 py-1 font-mono text-sm">
+              {country.nomadScore}
+            </span>
+          </div>
+
+          <div className="mt-5 grid gap-3 text-sm">
+            <div className="flex items-center justify-between gap-3">
+              <span className="flex items-center gap-2 text-muted-foreground">
+                <DollarSign className="h-4 w-4 text-primary" />
+                Income
+              </span>
+              <span className="font-medium">{formatCurrency(country.minimumIncomeMonthlyUsd)}/mo</span>
+            </div>
+            <div className="flex items-center justify-between gap-3">
+              <span className="flex items-center gap-2 text-muted-foreground">
+                <Clock3 className="h-4 w-4 text-primary" />
+                Processing
+              </span>
+              <span className="font-medium">{country.processingTime}</span>
+            </div>
+            <div className="flex items-center justify-between gap-3">
+              <span className="flex items-center gap-2 text-muted-foreground">
+                <Users className="h-4 w-4 text-primary" />
+                Family
+              </span>
+              <span className="font-medium">{country.dependentsAllowed ? "Dependents" : "Solo"}</span>
+            </div>
+            <div className="flex items-center justify-between gap-3">
+              <span className="flex items-center gap-2 text-muted-foreground">
+                <ShieldCheck className="h-4 w-4 text-primary" />
+                Checked
+              </span>
+              <span className="font-medium">{country.lastVerified}</span>
             </div>
           </div>
-          <span className="rounded-md bg-muted px-2 py-1 font-mono text-sm">
-            {country.nomadScore}
-          </span>
-        </div>
 
-        <div className="mt-5 grid gap-3 text-sm">
-          <div className="flex items-center justify-between gap-3">
-            <span className="flex items-center gap-2 text-muted-foreground">
-              <DollarSign className="h-4 w-4 text-primary" />
-              Income
+          <div className="mt-5 flex flex-wrap items-center gap-2">
+            <Badge variant={country.status === "active" ? "status" : "gold"}>
+              {country.status}
+            </Badge>
+            <Badge variant="outline">{country.region}</Badge>
+            <span className="rounded-md border px-2 py-1 text-xs text-muted-foreground">
+              {formatVisaFeeEstimate(country)}
             </span>
-            <span className="font-medium">{formatCurrency(country.minimumIncomeMonthlyUsd)}/mo</span>
           </div>
-          <div className="flex items-center justify-between gap-3">
-            <span className="flex items-center gap-2 text-muted-foreground">
-              <Clock3 className="h-4 w-4 text-primary" />
-              Processing
-            </span>
-            <span className="font-medium">{country.processingTime}</span>
-          </div>
-          <div className="flex items-center justify-between gap-3">
-            <span className="flex items-center gap-2 text-muted-foreground">
-              <Users className="h-4 w-4 text-primary" />
-              Family
-            </span>
-            <span className="font-medium">{country.dependentsAllowed ? "Dependents" : "Solo"}</span>
-          </div>
-          <div className="flex items-center justify-between gap-3">
-            <span className="flex items-center gap-2 text-muted-foreground">
-              <ShieldCheck className="h-4 w-4 text-primary" />
-              Checked
-            </span>
-            <span className="font-medium">{country.lastVerified}</span>
-          </div>
-        </div>
 
-        <div className="mt-5 flex flex-wrap items-center gap-2">
-          <Badge variant={country.status === "active" ? "status" : "gold"}>
-            {country.status}
-          </Badge>
-          <Badge variant="outline">{country.region}</Badge>
-          <span className="rounded-md border px-2 py-1 text-xs text-muted-foreground">
-            {formatVisaFeeForApplicant(country, applyingFrom)}
-          </span>
-        </div>
-
-        <div className="mt-auto flex items-center gap-1 pt-5 text-sm font-medium text-primary">
-          Read country guide <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
+          <div className="mt-auto flex items-center gap-1 pt-5 text-sm font-medium text-primary">
+            Read country guide <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
+          </div>
+        </Link>
+        <div className="mt-4 border-t pt-3">
+          <ShareActions
+            title={`${country.countryName} digital nomad visa`}
+            text={`Review ${country.countryName} digital nomad visa requirements on Nomad Visa Radar.`}
+            url={href}
+            compact
+          />
         </div>
       </Card>
-    </Link>
   );
 }
 
@@ -110,7 +119,6 @@ export default async function CountriesPage({
     duration?: string;
     family?: string;
     tax?: string;
-    applyingFrom?: string;
   }>;
 }) {
   const params = await searchParams;
@@ -120,8 +128,7 @@ export default async function CountriesPage({
   const duration = params.duration ?? "";
   const family = params.family === "true";
   const tax = params.tax === "true";
-  const applyingFrom = params.applyingFrom?.trim() || "United States";
-  const hasActiveFilters = Boolean(q || region || income || duration || family || tax || params.applyingFrom?.trim());
+  const hasActiveFilters = Boolean(q || region || income || duration || family || tax);
 
   const filtered = countries.filter((country) => {
     const matchesQuery =
@@ -160,9 +167,15 @@ export default async function CountriesPage({
         <p className="mt-4 text-lg leading-8 text-muted-foreground">
           Explore active digital nomad, remote worker, and freelancer visa programs with income, tax, processing, family, and source confidence signals.
         </p>
+        <ShareActions
+          title="Digital nomad visa countries"
+          text="Browse digital nomad visa countries on Nomad Visa Radar."
+          url={`${siteConfig.url}/countries`}
+          className="mt-5"
+        />
       </div>
       <form className="mt-8 rounded-lg border bg-card p-4">
-        <div className="grid gap-3 lg:grid-cols-[1.4fr_180px_170px_170px_190px]">
+        <div className="grid gap-3 lg:grid-cols-[1.4fr_180px_170px_170px]">
           <Input name="q" placeholder="Search by country or program" defaultValue={params.q} />
           <select
             name="region"
@@ -196,19 +209,6 @@ export default async function CountriesPage({
             <option value="one-year">Around 1 year</option>
             <option value="long">Long stay</option>
           </select>
-          <div>
-            <Input
-              name="applyingFrom"
-              list="countries-applying-from"
-              placeholder="Applying from"
-              defaultValue={applyingFrom}
-            />
-            <datalist id="countries-applying-from">
-              {applicantCountries.map((countryName) => (
-                <option key={countryName} value={countryName} />
-              ))}
-            </datalist>
-          </div>
         </div>
         <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col gap-2 sm:flex-row">
@@ -253,7 +253,7 @@ export default async function CountriesPage({
       </div>
       <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {visibleCountries.map((country) => (
-          <CountryDirectoryCard key={country.slug} country={country} applyingFrom={applyingFrom} />
+          <CountryDirectoryCard key={country.slug} country={country} />
         ))}
       </div>
       {remainingCount > 0 && (
