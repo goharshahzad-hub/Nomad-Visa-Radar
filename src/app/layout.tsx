@@ -20,6 +20,7 @@ const geistMono = Geist_Mono({
 
 const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?.trim();
 const googleAnalyticsId = "G-Y99W1DHQK4";
+const googleAdsenseClientId = "ca-pub-9803468561299872";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -64,6 +65,13 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full`}
     >
       <body className="min-h-full bg-background text-foreground antialiased">
+        <Script
+          id="google-adsense"
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${googleAdsenseClientId}`}
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
           strategy="afterInteractive"
