@@ -6,6 +6,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { CountryFlag } from "@/components/country-flag";
 import { MobileNav } from "@/components/mobile-nav";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { AuthNav } from "@/components/auth-nav";
 import { cn } from "@/lib/utils";
 
 const menuColumns = [
@@ -136,12 +137,7 @@ export function SiteHeader() {
           <div className="hidden md:block">
             <ThemeToggle />
           </div>
-          <Link
-            href="/login"
-            className={cn(buttonVariants({ variant: "outline", size: "sm" }), "hidden sm:inline-flex")}
-          >
-            Login
-          </Link>
+          <AuthNav className="hidden sm:flex" buttonClassName="max-w-40" />
           <Link
             href="/compare"
             className={cn(buttonVariants({ variant: "premium", size: "sm" }), "hidden min-[420px]:inline-flex")}

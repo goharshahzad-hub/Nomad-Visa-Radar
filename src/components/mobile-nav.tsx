@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { useState } from "react";
 import { BarChart3, Bell, Globe2, LayoutDashboard, Menu, Newspaper, X } from "lucide-react";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { AuthNav } from "@/components/auth-nav";
 import { siteConfig } from "@/lib/site";
-import { cn } from "@/lib/utils";
 
 const mobileLinks = [
   { href: "/countries", label: "Countries", icon: Globe2 },
@@ -53,13 +53,7 @@ export function MobileNav() {
               ))}
             </div>
             <div className="mt-3 grid grid-cols-[1fr_auto] gap-2 border-t pt-3">
-              <Link
-                href="/login"
-                onClick={close}
-                className={cn(buttonVariants({ variant: "outline" }), "w-full")}
-              >
-                Login
-              </Link>
+              <AuthNav onNavigate={close} buttonClassName="w-full" />
               <ThemeToggle />
             </div>
           </div>
