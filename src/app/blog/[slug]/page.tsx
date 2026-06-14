@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { NewsletterForm } from "@/components/newsletter-form";
-import { blogPosts } from "@/lib/visa-data";
+import { blogPosts, getAuthorProfile } from "@/lib/visa-data";
 import { siteConfig } from "@/lib/site";
 import { slugify } from "@/lib/utils";
 
@@ -58,6 +58,8 @@ export default async function BlogPostPage({
   if (!post) {
     notFound();
   }
+
+  const authorProfile = getAuthorProfile(post.author);
 
   const articleSchema = {
     "@context": "https://schema.org",
@@ -138,6 +140,24 @@ export default async function BlogPostPage({
 
       <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="space-y-8">
+          <Card className="p-6">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+              <div>
+                <p className="text-sm font-medium text-primary">Editorial note</p>
+                <h2 className="mt-2 text-xl font-semibold">{authorProfile.role}</h2>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                  {authorProfile.reviewStandard}
+                </p>
+              </div>
+              <Link
+                href={`/author/${slugify(post.author)}`}
+                className="shrink-0 text-sm font-medium text-primary underline-offset-4 hover:underline"
+              >
+                View author profile
+              </Link>
+            </div>
+          </Card>
+
           {post.sections.map((section) => (
             <section key={section.heading}>
               <h2 className="text-2xl font-semibold">{section.heading}</h2>

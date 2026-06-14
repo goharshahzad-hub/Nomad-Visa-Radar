@@ -15,6 +15,19 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/blog",
   },
+  openGraph: {
+    title: "Digital Nomad Visa Blog",
+    description:
+      "Editorial guides about digital nomad visas, tax notes, family relocation, remote worker requirements, country comparisons, and visa costs.",
+    images: [siteConfig.socialImage],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Digital Nomad Visa Blog",
+    description:
+      "Editorial guides about digital nomad visas, tax notes, family relocation, remote worker requirements, country comparisons, and visa costs.",
+    images: [siteConfig.socialImage],
+  },
 };
 
 export default function BlogPage() {

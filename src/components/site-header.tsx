@@ -35,28 +35,17 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b bg-background/78 backdrop-blur-xl">
       <div className="border-b border-white/10 bg-zinc-950 text-white">
-        <div className="relative mx-auto flex h-9 max-w-7xl overflow-hidden px-4 sm:px-6 lg:px-8">
-          <div className="update-marquee flex min-w-full shrink-0 items-center gap-8 whitespace-nowrap pr-8 text-xs font-medium">
+        <div
+          className="mx-auto flex h-9 max-w-7xl items-center overflow-x-auto px-4 sm:px-6 lg:px-8"
+          aria-label="Latest visa updates"
+        >
+          <div className="flex shrink-0 items-center gap-6 whitespace-nowrap text-xs font-medium">
+            <span className="text-white/55">Latest</span>
             {tickerUpdates.map((update) => (
               <Link
                 key={update.slug}
                 href={`/latest-updates#${update.slug}`}
                 className="text-white/90 transition hover:text-white"
-              >
-                {update.title}
-              </Link>
-            ))}
-          </div>
-          <div
-            className="update-marquee flex min-w-full shrink-0 items-center gap-8 whitespace-nowrap pr-8 text-xs font-medium"
-            aria-hidden="true"
-          >
-            {tickerUpdates.map((update) => (
-              <Link
-                key={`${update.slug}-repeat`}
-                href={`/latest-updates#${update.slug}`}
-                className="text-white/90 transition hover:text-white"
-                tabIndex={-1}
               >
                 {update.title}
               </Link>

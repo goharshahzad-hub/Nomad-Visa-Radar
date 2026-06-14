@@ -1,12 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CountryCard } from "@/components/country-card";
+import { ArrowUpRight, Clock3, DollarSign, ShieldCheck, Users } from "lucide-react";
+import { CountryFlag } from "@/components/country-flag";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { applicantCountries, countries } from "@/lib/visa-data";
-import { cn } from "@/lib/utils";
+import {
+  applicantCountries,
+  countries,
+  formatVisaFeeForApplicant,
+  type VisaCountry,
+} from "@/lib/visa-data";
+import { cn, formatCurrency } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Digital Nomad Visa Countries",
@@ -16,6 +22,83 @@ export const metadata: Metadata = {
     canonical: "/countries",
   },
 };
+
+function CountryDirectoryCard({
+  country,
+  applyingFrom,
+}: {
+  country: VisaCountry;
+  applyingFrom: string;
+}) {
+  return (
+    <Link
+      href={`/digital-nomad-visa/${country.slug}`}
+      className="group block h-full rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+    >
+      <Card className="flex h-full flex-col p-5 transition hover:-translate-y-0.5 hover:shadow-lg">
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex min-w-0 items-start gap-3">
+            <CountryFlag country={country} className="mt-1 h-6 w-9" />
+            <div className="min-w-0">
+              <h2 className="truncate text-lg font-semibold">{country.countryName}</h2>
+              <p className="mt-1 line-clamp-2 text-sm leading-6 text-muted-foreground">
+                {country.visaProgramName}
+              </p>
+            </div>
+          </div>
+          <span className="rounded-md bg-muted px-2 py-1 font-mono text-sm">
+            {country.nomadScore}
+          </span>
+        </div>
+
+        <div className="mt-5 grid gap-3 text-sm">
+          <div className="flex items-center justify-between gap-3">
+            <span className="flex items-center gap-2 text-muted-foreground">
+              <DollarSign className="h-4 w-4 text-primary" />
+              Income
+            </span>
+            <span className="font-medium">{formatCurrency(country.minimumIncomeMonthlyUsd)}/mo</span>
+          </div>
+          <div className="flex items-center justify-between gap-3">
+            <span className="flex items-center gap-2 text-muted-foreground">
+              <Clock3 className="h-4 w-4 text-primary" />
+              Processing
+            </span>
+            <span className="font-medium">{country.processingTime}</span>
+          </div>
+          <div className="flex items-center justify-between gap-3">
+            <span className="flex items-center gap-2 text-muted-foreground">
+              <Users className="h-4 w-4 text-primary" />
+              Family
+            </span>
+            <span className="font-medium">{country.dependentsAllowed ? "Dependents" : "Solo"}</span>
+          </div>
+          <div className="flex items-center justify-between gap-3">
+            <span className="flex items-center gap-2 text-muted-foreground">
+              <ShieldCheck className="h-4 w-4 text-primary" />
+              Checked
+            </span>
+            <span className="font-medium">{country.lastVerified}</span>
+          </div>
+        </div>
+
+        <div className="mt-5 flex flex-wrap items-center gap-2">
+          <Badge variant={country.status === "active" ? "status" : "gold"}>
+            {country.status}
+          </Badge>
+          <Badge variant="outline">{country.region}</Badge>
+          <span className="rounded-md border px-2 py-1 text-xs text-muted-foreground">
+            {formatVisaFeeForApplicant(country, applyingFrom)}
+          </span>
+        </div>
+
+        <div className="mt-auto flex items-center gap-1 pt-5 text-sm font-medium text-primary">
+          Read country guide <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
+        </div>
+      </Card>
+    </Link>
+  );
+}
 
 export default async function CountriesPage({
   searchParams,
@@ -153,7 +236,7 @@ export default async function CountriesPage({
       </div>
       <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {filtered.map((country) => (
-          <CountryCard key={country.slug} country={country} applyingFrom={applyingFrom} />
+          <CountryDirectoryCard key={country.slug} country={country} applyingFrom={applyingFrom} />
         ))}
       </div>
       {filtered.length === 0 && (

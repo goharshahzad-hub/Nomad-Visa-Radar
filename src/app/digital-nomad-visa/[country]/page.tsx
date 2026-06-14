@@ -6,8 +6,12 @@ import type { LucideIcon } from "lucide-react";
 import {
   ArrowUpRight,
   BadgeDollarSign,
+  CheckCircle2,
   Clock3,
+  ClipboardCheck,
   HeartHandshake,
+  HelpCircle,
+  ShieldAlert,
   ShieldCheck,
   Users,
   Wifi,
@@ -24,6 +28,7 @@ import {
   countries,
   formatMinimumIncomeRequirement,
   getCountryBySlug,
+  getCountryEditorialGuidance,
   getCountryFlagImage,
   getDocumentsRequired,
   getOfficialVisaInformationUrl,
@@ -79,6 +84,7 @@ export default async function CountryPage({
   const flagImage = getCountryFlagImage(country.slug);
   const incomeRequirement = formatMinimumIncomeRequirement(country);
   const documentsRequired = getDocumentsRequired(country);
+  const guidance = getCountryEditorialGuidance(country);
   const facts: { label: string; value: string; icon: LucideIcon }[] = [
     { label: "Minimum income", value: incomeRequirement, icon: BadgeDollarSign },
     { label: "Duration", value: country.duration, icon: Clock3 },
@@ -169,6 +175,7 @@ export default async function CountryPage({
                 {country.status}
               </Badge>
               <Badge variant="outline">{country.region}</Badge>
+              <Badge variant="outline">Last checked {country.lastVerified}</Badge>
             </div>
             <h1 className="mt-6 text-3xl font-semibold tracking-normal sm:text-5xl lg:text-6xl">
               {country.countryName} digital nomad visa
@@ -185,6 +192,65 @@ export default async function CountryPage({
           <CountryHighlightsSlider country={country} />
           <MobilityPathwaySection country={country} />
           <LivingEducationSection country={country} />
+
+          <section className="rounded-lg border bg-card p-6">
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <Badge variant="outline">Editorial review</Badge>
+                <h2 className="mt-3 text-2xl font-semibold">Who this route fits</h2>
+              </div>
+              <p className="rounded-md bg-muted px-3 py-2 text-sm text-muted-foreground">
+                Last checked {country.lastVerified}
+              </p>
+            </div>
+            <p className="mt-4 leading-7 text-muted-foreground">{guidance.reviewerNote}</p>
+            <div className="mt-6 grid gap-4 md:grid-cols-2">
+              <div className="rounded-lg border bg-background p-4">
+                <h3 className="flex items-center gap-2 font-semibold">
+                  <CheckCircle2 className="h-4 w-4 text-primary" />
+                  Best for
+                </h3>
+                <ul className="mt-3 space-y-2 text-sm leading-6 text-muted-foreground">
+                  {guidance.bestFor.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="rounded-lg border bg-background p-4">
+                <h3 className="flex items-center gap-2 font-semibold">
+                  <HelpCircle className="h-4 w-4 text-primary" />
+                  Avoid if
+                </h3>
+                <ul className="mt-3 space-y-2 text-sm leading-6 text-muted-foreground">
+                  {guidance.avoidIf.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="rounded-lg border bg-background p-4">
+                <h3 className="flex items-center gap-2 font-semibold">
+                  <ShieldAlert className="h-4 w-4 text-primary" />
+                  Common risks
+                </h3>
+                <ul className="mt-3 space-y-2 text-sm leading-6 text-muted-foreground">
+                  {guidance.commonRisks.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="rounded-lg border bg-background p-4">
+                <h3 className="flex items-center gap-2 font-semibold">
+                  <ClipboardCheck className="h-4 w-4 text-primary" />
+                  Next steps
+                </h3>
+                <ul className="mt-3 space-y-2 text-sm leading-6 text-muted-foreground">
+                  {guidance.nextSteps.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </section>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <VisaFeeCard country={country} />

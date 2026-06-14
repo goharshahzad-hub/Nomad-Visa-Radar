@@ -7,6 +7,8 @@ export const siteConfig = {
   description:
     "Search, compare, and monitor digital nomad visa requirements worldwide.",
   url: siteUrl,
+  socialImage:
+    "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1200&h=630&q=80",
   nav: [
     { href: "/", label: "Home" },
     { href: "/countries", label: "Countries" },

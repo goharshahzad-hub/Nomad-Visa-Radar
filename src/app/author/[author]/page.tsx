@@ -4,7 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { blogPosts } from "@/lib/visa-data";
+import { blogPosts, getAuthorProfile } from "@/lib/visa-data";
 import { titleCaseFromSlug, slugify } from "@/lib/utils";
 
 export async function generateMetadata({
@@ -35,15 +35,32 @@ export default async function AuthorPage({
     notFound();
   }
 
+  const profile = getAuthorProfile(posts[0].author);
+
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
       <Badge variant="outline">Author</Badge>
       <h1 className="mt-4 text-3xl font-semibold tracking-normal sm:text-4xl">
-        {posts[0].author}
+        {profile.name}
       </h1>
-      <p className="mt-3 max-w-2xl text-muted-foreground">
-        Editorial reviews focused on official sources, conservative visa interpretation, and practical remote-work relocation planning.
-      </p>
+      <p className="mt-2 text-lg font-medium text-primary">{profile.role}</p>
+      <p className="mt-3 max-w-3xl leading-8 text-muted-foreground">{profile.bio}</p>
+      <div className="mt-6 grid gap-4 md:grid-cols-[1fr_1.2fr]">
+        <Card className="p-5">
+          <h2 className="font-semibold">Research focus</h2>
+          <ul className="mt-3 space-y-2 text-sm leading-6 text-muted-foreground">
+            {profile.focus.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </Card>
+        <Card className="p-5">
+          <h2 className="font-semibold">Review standard</h2>
+          <p className="mt-3 text-sm leading-6 text-muted-foreground">
+            {profile.reviewStandard}
+          </p>
+        </Card>
+      </div>
       <div className="mt-8 grid gap-5 md:grid-cols-2">
         {posts.map((post) => (
           <Link key={post.slug} href={`/blog/${post.slug}`}>

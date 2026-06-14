@@ -2617,6 +2617,329 @@ export const asiaCountries = countries
   .sort((a, b) => b.nomadScore - a.nomadScore)
   .slice(0, 6);
 
+export type CountryEditorialGuidance = {
+  bestFor: string[];
+  avoidIf: string[];
+  commonRisks: string[];
+  nextSteps: string[];
+  reviewerNote: string;
+};
+
+const countryEditorialGuidance: Record<string, CountryEditorialGuidance> = {
+  portugal: {
+    bestFor: [
+      "Remote workers who want an EU base with mature relocation services.",
+      "Families that need international schools, healthcare access, and a larger expat community.",
+      "Applicants with clean salary, freelance, or company income that can be documented month by month.",
+    ],
+    avoidIf: [
+      "Your income is irregular and hard to prove with bank statements or contracts.",
+      "You need a very fast appointment window in a busy consular market.",
+      "You are relying on old income-threshold articles instead of current consular guidance.",
+    ],
+    commonRisks: [
+      "Minimum-wage-linked income figures can shift, so fixed numbers in older guides age quickly.",
+      "Local consulates can ask for additional proof even when the national checklist looks simple.",
+      "Families often underestimate translation, apostille, and insurance-document timing.",
+    ],
+    nextSteps: [
+      "Check the Portuguese visa portal and the exact consulate that will receive the file.",
+      "Build a one-page income trail showing employer, clients, bank deposits, and dates.",
+      "Prepare dependent civil documents early if a spouse or children will move with you.",
+    ],
+    reviewerNote:
+      "Portugal is still a strong remote-work option, but the application succeeds on documentation quality rather than popularity. Treat the official checklist as the final source.",
+  },
+  spain: {
+    bestFor: [
+      "Remote employees and freelancers with stable foreign-source work.",
+      "Applicants who want a larger country with multiple city choices and strong transport.",
+      "Families that can prepare dependent evidence and financial proof carefully.",
+    ],
+    avoidIf: [
+      "Your employer cannot clearly confirm remote work from Spain.",
+      "Your client base or work plan depends heavily on Spanish local clients.",
+      "You need a low-document route with minimal professional evidence.",
+    ],
+    commonRisks: [
+      "Spain's file can be document-heavy, especially around professional eligibility and background checks.",
+      "Consular requirements may vary by filing location and appointment system.",
+      "Applicants sometimes confuse tourist stay flexibility with residence-visa requirements.",
+    ],
+    nextSteps: [
+      "Read the official digital nomad visa page for the consulate where you will apply.",
+      "Ask your employer or clients for letters that match the remote-work requirement.",
+      "Prepare criminal-record and civil-status documents before appointment slots open.",
+    ],
+    reviewerNote:
+      "Spain is compelling for long-stay planning, but it rewards a precise file. The safest applicants can show foreign work, professional continuity, and clean documentation.",
+  },
+  thailand: {
+    bestFor: [
+      "Remote workers who want a Southeast Asia base with active coworking communities.",
+      "Applicants comfortable using an eVisa workflow and embassy-specific document instructions.",
+      "People who want lifestyle flexibility without assuming a direct permanent-residence path.",
+    ],
+    avoidIf: [
+      "Your work involves Thai employers or local Thai clients.",
+      "Your financial documents are thin, inconsistent, or difficult to explain.",
+      "You need one universal checklist that never changes by embassy or passport location.",
+    ],
+    commonRisks: [
+      "Social-media summaries can lag behind the official eVisa workflow.",
+      "Document wording can change by filing location.",
+      "Applicants may misread a long-stay visa as permission for local employment.",
+    ],
+    nextSteps: [
+      "Start from the official Thailand eVisa DTV category page.",
+      "Choose your filing location before preparing the document list.",
+      "Keep remote-work evidence simple, current, and clearly outside Thailand.",
+    ],
+    reviewerNote:
+      "Thailand's DTV is attractive, but it needs source discipline. Use the official eVisa flow over forum checklists when the two conflict.",
+  },
+  croatia: {
+    bestFor: [
+      "Third-country nationals with clear foreign employment or foreign-company work.",
+      "Remote workers who value a direct official definition of digital nomad status.",
+      "Applicants who want an EU coastal base but do not plan to serve Croatian employers.",
+    ],
+    avoidIf: [
+      "You plan to work for Croatian employers or provide services locally.",
+      "You need an indefinite renewable route without timing limits.",
+      "Your company ownership or client structure is difficult to separate from Croatia.",
+    ],
+    commonRisks: [
+      "The no-local-work boundary is central and should not be treated casually.",
+      "Family members may need route sequencing through family reunification.",
+      "Applicants sometimes plan housing before confirming residence timing.",
+    ],
+    nextSteps: [
+      "Read the Croatian Ministry of the Interior digital nomad page.",
+      "Prepare evidence that the company or clients are outside Croatia.",
+      "Check timing rules before planning a repeat stay.",
+    ],
+    reviewerNote:
+      "Croatia is one of the clearer official digital-nomad routes, but that clarity also means applicants should respect the foreign-work boundary.",
+  },
+  estonia: {
+    bestFor: [
+      "Founders, freelancers, and remote employees who value digital administration.",
+      "Applicants who understand the difference between e-Residency and residence permission.",
+      "Remote workers with employer, company, or client evidence outside Estonia.",
+    ],
+    avoidIf: [
+      "You assume e-Residency alone gives a right to live in Estonia.",
+      "You need a warm-weather lifestyle base.",
+      "Your work cannot be performed independently of location.",
+    ],
+    commonRisks: [
+      "Confusing e-Residency with the Digital Nomad Visa leads to poor planning.",
+      "Embassy appointment timing can affect travel plans.",
+      "Applicants may underprepare proof that work is online and foreign-based.",
+    ],
+    nextSteps: [
+      "Use Estonia's official e-Residency comparison page to separate the two routes.",
+      "Confirm the nearest Estonian embassy process before booking travel.",
+      "Prepare foreign employer, company, or client evidence in a clean bundle.",
+    ],
+    reviewerNote:
+      "Estonia is excellent for digitally organized applicants. The key is choosing the right route: e-Residency for business administration, Digital Nomad Visa for temporary stay.",
+  },
+  malta: {
+    bestFor: [
+      "Remote workers who want an English-speaking EU base.",
+      "Families who can budget carefully for housing, insurance, and school costs.",
+      "Freelancers and employees with clear foreign-source income.",
+    ],
+    avoidIf: [
+      "You are looking for the cheapest Mediterranean option.",
+      "You cannot document remote work and income clearly.",
+      "Your plan depends on local Maltese employment.",
+    ],
+    commonRisks: [
+      "Island housing costs can surprise applicants.",
+      "Insurance and accommodation proof should match the official application wording.",
+      "Dependent applications can add meaningful document and fee complexity.",
+    ],
+    nextSteps: [
+      "Read the Residency Malta Agency Nomad Residence Permit page.",
+      "Model rent, school, insurance, and transport costs before choosing Malta.",
+      "Prepare remote-work contracts and income evidence before starting the file.",
+    ],
+    reviewerNote:
+      "Malta is strongest when convenience and English-language administration matter more than lowest monthly cost.",
+  },
+  greece: {
+    bestFor: [
+      "Remote workers seeking a Mediterranean EU base with relatively familiar relocation paths.",
+      "Applicants who can prepare income, insurance, and accommodation proof well ahead of filing.",
+      "Families comparing lifestyle, schooling, and healthcare tradeoffs across Southern Europe.",
+    ],
+    avoidIf: [
+      "You need the simplest possible consular process.",
+      "You have not checked tax-residence exposure before a longer stay.",
+      "Your remote-work proof is informal or mostly verbal.",
+    ],
+    commonRisks: [
+      "Local filing instructions and appointment availability can shape the practical timeline.",
+      "Tax assumptions should be checked before staying long enough to create exposure.",
+      "Housing and family logistics can be harder in peak-season markets.",
+    ],
+    nextSteps: [
+      "Confirm current instructions through the official Greek authority or local consulate.",
+      "Prepare a conservative income and accommodation file.",
+      "Compare Greece against Portugal, Spain, and Malta for family and tax planning.",
+    ],
+    reviewerNote:
+      "Greece can be appealing, but applicants should keep the file practical and avoid treating lifestyle appeal as a substitute for documentation.",
+  },
+  italy: {
+    bestFor: [
+      "Highly organized applicants who can handle a consular workflow.",
+      "Remote professionals comparing a culturally rich EU base with long-stay planning.",
+      "Applicants who are comfortable checking the official Visa for Italy portal before acting.",
+    ],
+    avoidIf: [
+      "You need a quick or low-friction route.",
+      "Your local consulate does not clearly show the right filing path yet.",
+      "Your work evidence is difficult to translate into formal documents.",
+    ],
+    commonRisks: [
+      "Italy's workflow can feel fragmented because consular instructions matter.",
+      "Applicants may rely on headlines before the local filing route is ready.",
+      "Document translation and legalization timing can become the bottleneck.",
+    ],
+    nextSteps: [
+      "Start with the official Visa for Italy portal and your responsible consulate.",
+      "Prepare employment or freelance evidence in a formal, translatable format.",
+      "Avoid irreversible relocation commitments before the appointment path is clear.",
+    ],
+    reviewerNote:
+      "Italy is attractive, but it is not a casual route. The winning file is patient, formal, and consulate-specific.",
+  },
+  colombia: {
+    bestFor: [
+      "Remote workers seeking lower living costs and large-city coworking options.",
+      "Applicants comfortable comparing immigration rules with tax-residence planning.",
+      "Freelancers who can show steady client income and a clear non-local work plan.",
+    ],
+    avoidIf: [
+      "You are not ready to research neighborhood safety and healthcare access city by city.",
+      "Your income proof is mostly cash-based or hard to document.",
+      "You need a route with no tax-residence questions after a longer stay.",
+    ],
+    commonRisks: [
+      "Cost advantages vary sharply by city and neighborhood.",
+      "Tax residence should be checked before a long stay.",
+      "Applicants can underprepare Spanish translations and document formatting.",
+    ],
+    nextSteps: [
+      "Check the official Colombian visa authority instructions before filing.",
+      "Prepare income evidence with clean statements and client or employer context.",
+      "Research city-specific safety, healthcare, and housing before choosing a base.",
+    ],
+    reviewerNote:
+      "Colombia can be high-value for the right remote worker, but it deserves careful city selection and tax planning.",
+  },
+  mauritius: {
+    bestFor: [
+      "Remote workers seeking an island base with a relatively accessible premium travel route.",
+      "Applicants who can work for foreign employers or clients without local employment needs.",
+      "Families prioritizing lifestyle, safety, and English/French-friendly administration.",
+    ],
+    avoidIf: [
+      "You need dense big-city infrastructure.",
+      "Your work depends on local Mauritius clients.",
+      "You have not modelled island logistics and flight costs.",
+    ],
+    commonRisks: [
+      "Island living costs can differ from headline estimates.",
+      "Applicants should keep proof of foreign income and remote work clear.",
+      "Healthcare, schooling, and transport planning can vary by location.",
+    ],
+    nextSteps: [
+      "Confirm the current Premium Travel Visa instructions through the official portal.",
+      "Prepare proof that work and income remain outside Mauritius.",
+      "Compare housing and school options before committing to a long stay.",
+    ],
+    reviewerNote:
+      "Mauritius is a strong lifestyle option, especially for organized remote workers who understand island tradeoffs before arriving.",
+  },
+};
+
+export function getCountryEditorialGuidance(country: VisaCountry): CountryEditorialGuidance {
+  return countryEditorialGuidance[country.slug] ?? {
+    bestFor: [
+      `Remote workers who want a ${country.region} base and can document foreign-source work.`,
+      `Applicants whose monthly income comfortably meets ${country.minimumIncome}.`,
+      country.dependentsAllowed
+        ? "Families prepared to document dependent relationships, insurance, and housing."
+        : "Solo applicants who do not need dependent sponsorship under the same route.",
+    ],
+    avoidIf: [
+      "Your income is irregular, undocumented, or paid in a way that is difficult to trace.",
+      "You need local employment or local-client permission without confirming the rule.",
+      "You are relying on old third-party summaries instead of the current official source.",
+    ],
+    commonRisks: [
+      "Income thresholds, fees, and document rules can change between source checks.",
+      "Consulates and online portals can ask for extra proof based on filing location.",
+      "Tax residence and local work rules should be reviewed before a long stay.",
+    ],
+    nextSteps: [
+      "Open the official visa information page before making an application decision.",
+      "Prepare a clean income trail with contracts, employer letters, invoices, and bank statements.",
+      "Check insurance, background-check, translation, and dependent-document timing early.",
+    ],
+    reviewerNote:
+      `${country.countryName} is best treated as a formal immigration file, not a travel hack. Confirm the current official instructions before spending money on applications or relocation commitments.`,
+  };
+}
+
+export type AuthorProfile = {
+  name: string;
+  role: string;
+  bio: string;
+  focus: string[];
+  reviewStandard: string;
+};
+
+export const authorProfiles: Record<string, AuthorProfile> = {
+  [slugify("Nomad Visa Radar Editorial")]: {
+    name: "Nomad Visa Radar Editorial",
+    role: "Editorial research desk",
+    bio:
+      "The Nomad Visa Radar editorial desk reviews official visa pages, immigration portals, consular instructions, and public agency sources before turning country data into reader-facing guidance.",
+    focus: [
+      "Official-source visa research",
+      "Remote-work residence comparisons",
+      "Family, income, and document planning",
+      "Change monitoring before publication",
+    ],
+    reviewStandard:
+      "Substantive visa claims should be tied to an official source, a last-checked date, and a conservative explanation when rules vary by filing location.",
+  },
+  [slugify("Amira Shah")]: {
+    name: "Amira Shah",
+    role: "Remote-work relocation editor",
+    bio:
+      "Amira writes practical relocation explainers for remote workers and families, with an emphasis on evidence quality, dependent planning, cost realism, and avoiding outdated visa advice.",
+    focus: [
+      "Family relocation planning",
+      "Cost and lifestyle comparisons",
+      "Remote-work evidence preparation",
+      "Reader-friendly visa explainers",
+    ],
+    reviewStandard:
+      "Guides should help readers prepare better questions for official sources and qualified professionals, not replace legal or tax advice.",
+  },
+};
+
+export function getAuthorProfile(author: string): AuthorProfile {
+  return authorProfiles[slugify(author)] ?? authorProfiles[slugify("Nomad Visa Radar Editorial")];
+}
+
 export const latestUpdates = [
   {
     slug: "thailand-dtv-official-page-monitoring",
@@ -3704,6 +4027,742 @@ export const blogPosts: BlogPost[] = [
     ],
   },
 ];
+
+blogPosts.push(
+  {
+    slug: "digital-nomad-visa-income-proof-guide",
+    title: "How to Prepare Income Proof for a Digital Nomad Visa",
+    excerpt:
+      "A practical guide to salary, freelance, founder, and savings evidence for remote-work visa applications.",
+    category: "Application Planning",
+    author: "Nomad Visa Radar Editorial",
+    date: "2026-06-15",
+    updated: "2026-06-15",
+    readTime: "10 min read",
+    image: blogImages.checklist,
+    imageAlt: "Remote worker organizing bank statements and income proof",
+    keywords: [
+      "digital nomad visa income proof",
+      "remote work visa bank statements",
+      "freelance income visa evidence",
+      "digital nomad visa application documents",
+    ],
+    sources: [
+      {
+        label: "Spanish Consulate in London - Digital Nomad Visa",
+        url: "https://www.exteriores.gob.es/Consulados/londres/en/ServiciosConsulares/Paginas/Consular/Digital-Nomad-Visa.aspx",
+      },
+      {
+        label: "Portuguese Ministry of Foreign Affairs visa portal",
+        url: "https://vistos.mne.gov.pt/en/",
+      },
+    ],
+    sections: [
+      {
+        heading: "Why income proof is usually the center of the file",
+        body:
+          "Remote-work visas are built around the idea that the applicant can support themselves without taking local employment. That makes income proof more than a number. Officers want to see where money comes from, whether it is stable, and whether the work remains outside the destination country.",
+      },
+      {
+        heading: "Salary evidence",
+        body:
+          "Employees should prepare a recent employment letter, contract, payslips, and bank statements showing salary deposits. The strongest files make names, dates, amounts, and employer details easy to match without explanation.",
+        bullets: [
+          "Use statements that show salary actually arriving.",
+          "Ask the employer to confirm remote-work permission when the route requires it.",
+          "Avoid unexplained transfers that look like salary but are not documented.",
+        ],
+      },
+      {
+        heading: "Freelance and founder evidence",
+        body:
+          "Freelancers and founders usually need more context than employees. Combine client contracts, invoices, platform income records, company documents, tax filings where relevant, and bank statements that connect the paper trail to real deposits.",
+      },
+      {
+        heading: "A simple review method",
+        body:
+          "Before filing, open the official checklist and mark each income document against a requirement. If a stranger cannot understand your income source within five minutes, the file probably needs a clearer cover note.",
+      },
+    ],
+    faq: [
+      {
+        question: "How many months of bank statements should I prepare?",
+        answer:
+          "Many applicants prepare at least several recent months, but the exact number depends on the official checklist and consulate. Use the current source for the country where you apply.",
+      },
+      {
+        question: "Can savings replace monthly income?",
+        answer:
+          "Some routes may consider savings or financial resources, while others focus on recurring income. Do not assume savings are enough unless the official checklist allows it.",
+      },
+      {
+        question: "Should I include a cover note?",
+        answer:
+          "A short cover note can help when income is freelance, founder-based, or paid through multiple clients. Keep it factual and match it to documents.",
+      },
+    ],
+  },
+  {
+    slug: "digital-nomad-visa-family-dependent-documents-guide",
+    title: "Family and Dependent Documents for Digital Nomad Visa Applications",
+    excerpt:
+      "How remote workers moving with spouses, partners, children, or dependent relatives can prepare cleaner visa files.",
+    category: "Family",
+    author: "Amira Shah",
+    date: "2026-06-15",
+    updated: "2026-06-15",
+    readTime: "11 min read",
+    image: blogImages.family,
+    imageAlt: "Family reviewing relocation documents for a digital nomad visa",
+    keywords: [
+      "digital nomad visa dependents",
+      "family digital nomad visa documents",
+      "remote work visa spouse children",
+      "dependent documents visa application",
+    ],
+    sources: [
+      {
+        label: "Spanish Consulate in London - Digital Nomad Visa family members",
+        url: "https://www.exteriores.gob.es/Consulados/londres/en/ServiciosConsulares/Paginas/Consular/Digital-Nomad-Visa.aspx",
+      },
+      {
+        label: "Croatian Ministry of the Interior - Digital nomads",
+        url: "https://mup.gov.hr/aliens-281621/stay-and-work/digital-nomads/286833",
+      },
+    ],
+    sections: [
+      {
+        heading: "Family files are not just larger solo files",
+        body:
+          "Adding dependents changes the evidence burden. The applicant must usually prove both the remote-work route and the family relationship, then show enough financial, housing, insurance, and civil-status evidence for everyone included.",
+      },
+      {
+        heading: "Documents to collect early",
+        body:
+          "Civil documents are often the slowest part of a family application because they may need recent issue dates, apostilles, translations, or legalization.",
+        bullets: [
+          "Marriage certificate or registered partnership evidence.",
+          "Birth certificates for children.",
+          "Custody or travel consent documents where relevant.",
+          "Health insurance for each family member.",
+          "Schooling or housing planning notes when the destination asks for practical proof.",
+        ],
+      },
+      {
+        heading: "Income planning for families",
+        body:
+          "Some countries apply higher financial expectations when dependents join. Even when a page does not show a simple family multiplier, officers may still look for a realistic support plan.",
+      },
+      {
+        heading: "The safest sequence",
+        body:
+          "Read the main applicant route first, then the family/dependent section, then the local consulate page. If the route uses family reunification after approval, do not assume everyone files at the same moment.",
+      },
+    ],
+    faq: [
+      {
+        question: "Can unmarried partners apply as dependents?",
+        answer:
+          "Some routes include unmarried partners, but evidence standards vary. Use the official page for the country and filing location before assuming eligibility.",
+      },
+      {
+        question: "Do children need separate visa forms?",
+        answer:
+          "Often yes. Many consular systems require a separate form and document set for each applicant, including minors.",
+      },
+      {
+        question: "Should families apply through an adviser?",
+        answer:
+          "Families face more document risk than solo applicants. Professional advice can be useful when custody, mixed nationality, prior residence, or school timing is complex.",
+      },
+    ],
+  },
+  {
+    slug: "digital-nomad-visa-health-insurance-guide",
+    title: "Health Insurance for Digital Nomad Visa Applications",
+    excerpt:
+      "What remote workers should check before buying insurance for a long-stay visa application.",
+    category: "Requirements",
+    author: "Nomad Visa Radar Editorial",
+    date: "2026-06-15",
+    updated: "2026-06-15",
+    readTime: "8 min read",
+    image: blogImages.checklist,
+    imageAlt: "Health insurance documents prepared for a visa application",
+    keywords: [
+      "digital nomad visa health insurance",
+      "remote worker visa insurance",
+      "long stay visa medical insurance",
+      "visa insurance requirements",
+    ],
+    sources: [
+      {
+        label: "Portuguese Ministry of Foreign Affairs visa portal",
+        url: "https://vistos.mne.gov.pt/en/",
+      },
+      {
+        label: "Residency Malta Agency - Nomad Residence Permit",
+        url: "https://residencymalta.gov.mt/nomad-residence-permit/",
+      },
+    ],
+    sections: [
+      {
+        heading: "Insurance wording matters",
+        body:
+          "Visa officers are not only checking whether you bought insurance. They are checking whether the policy matches the route's wording. A policy that works for tourism may not satisfy a residence or temporary-stay application.",
+      },
+      {
+        heading: "What to review before purchase",
+        body:
+          "Before paying, compare the policy certificate against the official checklist. The certificate should clearly show the insured person, dates, destination coverage, medical coverage, and exclusions that matter for the route.",
+        bullets: [
+          "Coverage dates match the requested stay or application period.",
+          "Every applicant is named, including dependents.",
+          "The destination country or region is covered.",
+          "Emergency medical and repatriation wording is visible if required.",
+        ],
+      },
+      {
+        heading: "Common mistakes",
+        body:
+          "Applicants often submit screenshots, app receipts, or travel-policy summaries instead of a formal certificate. A clean certificate is easier to review than a marketing page.",
+      },
+      {
+        heading: "After approval",
+        body:
+          "Some countries may require local registration or a different insurance arrangement after arrival. Keep the visa-stage policy separate from long-term healthcare planning.",
+      },
+    ],
+    faq: [
+      {
+        question: "Can I use my credit card travel insurance?",
+        answer:
+          "Only if it clearly satisfies the official wording. Many credit card policies are limited and may not cover long-stay residence needs.",
+      },
+      {
+        question: "Do dependents need separate insurance?",
+        answer:
+          "Each dependent usually needs to be covered and named. Check whether one family certificate is acceptable or individual certificates are safer.",
+      },
+      {
+        question: "Should I buy before appointment?",
+        answer:
+          "Usually applicants need proof before filing, but timing and refundability matter. Match the purchase to the appointment and official checklist.",
+      },
+    ],
+  },
+  {
+    slug: "digital-nomad-visa-tax-residency-questions",
+    title: "Tax Residency Questions Remote Workers Should Ask Before Choosing a Visa",
+    excerpt:
+      "A conservative tax-planning checklist for comparing digital nomad visas without relying on oversimplified tax-free claims.",
+    category: "Tax",
+    author: "Nomad Visa Radar Editorial",
+    date: "2026-06-15",
+    updated: "2026-06-15",
+    readTime: "10 min read",
+    image: blogImages.tax,
+    imageAlt: "Remote worker reviewing tax residency questions before choosing a visa",
+    keywords: [
+      "digital nomad visa tax residency",
+      "remote worker tax questions",
+      "digital nomad visa tax planning",
+      "tax friendly digital nomad visas",
+    ],
+    sources: [
+      {
+        label: "Spanish Ministry of Foreign Affairs consular services",
+        url: "https://www.exteriores.gob.es/",
+      },
+      {
+        label: "Portuguese Ministry of Foreign Affairs visa portal",
+        url: "https://vistos.mne.gov.pt/en/",
+      },
+    ],
+    sections: [
+      {
+        heading: "Visa permission is not a tax answer",
+        body:
+          "A visa can allow a remote worker to stay, but tax residence depends on domestic law, days present, personal ties, income source, treaties, and filing history. Treat tax claims in visa marketing as a starting question, not a conclusion.",
+      },
+      {
+        heading: "Questions to ask before choosing a country",
+        body:
+          "The best tax planning starts before arrival. Write down the facts a tax adviser would need and compare them across the countries on your shortlist.",
+        bullets: [
+          "How many days will you spend in the country during a tax year?",
+          "Where is your employer, company, or main client base located?",
+          "Will you keep a home, spouse, children, or business in another country?",
+          "Does the visa route include any special tax regime or only immigration permission?",
+        ],
+      },
+      {
+        heading: "Watch out for simple rankings",
+        body:
+          "A country can be visa-friendly but tax-complex. Another can be tax-attractive but hard to qualify for. Compare the full situation instead of chasing a single tax-friendly badge.",
+      },
+      {
+        heading: "When to get advice",
+        body:
+          "Get professional advice when you own a company, have stock compensation, bill clients in multiple countries, or expect to stay near residence thresholds.",
+      },
+    ],
+    faq: [
+      {
+        question: "Does a digital nomad visa make me tax resident?",
+        answer:
+          "Not automatically. It can be one factor, but tax residence depends on the destination's rules and your facts.",
+      },
+      {
+        question: "Are digital nomad visas tax free?",
+        answer:
+          "Some routes offer favorable treatment, but broad tax-free claims are risky. Confirm with official sources and a qualified adviser.",
+      },
+      {
+        question: "Can I rely on the tax note on a country page?",
+        answer:
+          "Use it for screening, not final planning. Tax decisions need personal advice.",
+      },
+    ],
+  },
+  {
+    slug: "digital-nomad-visa-processing-time-planning",
+    title: "How to Plan Around Digital Nomad Visa Processing Times",
+    excerpt:
+      "A realistic timeline method for appointments, background checks, translations, biometrics, and travel planning.",
+    category: "Application Planning",
+    author: "Amira Shah",
+    date: "2026-06-15",
+    updated: "2026-06-15",
+    readTime: "9 min read",
+    image: blogImages.checklist,
+    imageAlt: "Calendar and document checklist for visa processing time planning",
+    keywords: [
+      "digital nomad visa processing time",
+      "remote work visa appointment timeline",
+      "visa application planning checklist",
+      "digital nomad visa documents timeline",
+    ],
+    sources: [
+      {
+        label: "Estonian e-Residency - Digital Nomad Visa comparison",
+        url: "https://www.e-resident.gov.ee/nomadvisa/",
+      },
+      {
+        label: "Croatian Ministry of the Interior - Digital nomads",
+        url: "https://mup.gov.hr/aliens-281621/stay-and-work/digital-nomads/286833",
+      },
+    ],
+    sections: [
+      {
+        heading: "Processing time is not the whole timeline",
+        body:
+          "Published processing estimates often start after a complete file is accepted. Your real timeline includes research, appointment availability, document ordering, translations, payment, biometrics, and possible follow-up requests.",
+      },
+      {
+        heading: "Build a conservative timeline",
+        body:
+          "Work backward from your intended move date and add buffers. The safest applicants plan for document delays before they sign leases or book non-refundable travel.",
+        bullets: [
+          "Two to four weeks for document collection when background checks are needed.",
+          "Extra time for apostilles, legalization, or certified translations.",
+          "Appointment delays in popular consular markets.",
+          "Buffer time after approval for entry, registration, or residence-card steps.",
+        ],
+      },
+      {
+        heading: "What causes delays",
+        body:
+          "The most common delays are incomplete income proof, insurance wording, expired civil documents, unclear remote-work letters, and mismatched names across documents.",
+      },
+      {
+        heading: "A cleaner filing habit",
+        body:
+          "Create a dated folder for the official checklist you used. If the rules change later, you can show exactly what you prepared against and update the file calmly.",
+      },
+    ],
+    faq: [
+      {
+        question: "Can I travel while my visa is processing?",
+        answer:
+          "It depends on the country, passport, and filing method. Do not assume you can enter or remain while an application is pending.",
+      },
+      {
+        question: "Should I book housing before approval?",
+        answer:
+          "Avoid irreversible commitments unless the application specifically requires accommodation proof and you understand the risk.",
+      },
+      {
+        question: "Why do processing times differ online?",
+        answer:
+          "Some pages quote government processing, while others include appointment wait time or anecdotal user timelines.",
+      },
+    ],
+  },
+  {
+    slug: "freelancer-digital-nomad-visa-evidence-guide",
+    title: "Freelancer Evidence for Digital Nomad Visa Applications",
+    excerpt:
+      "How freelancers can show client work, invoices, income deposits, and foreign-source activity without overcomplicating the file.",
+    category: "Requirements",
+    author: "Nomad Visa Radar Editorial",
+    date: "2026-06-15",
+    updated: "2026-06-15",
+    readTime: "9 min read",
+    image: blogImages.remote,
+    imageAlt: "Freelancer preparing client contracts and invoices for a visa application",
+    keywords: [
+      "freelancer digital nomad visa",
+      "freelance income proof visa",
+      "remote freelancer visa documents",
+      "client contracts digital nomad visa",
+    ],
+    sources: [
+      {
+        label: "Spanish Consulate in London - Digital Nomad Visa",
+        url: "https://www.exteriores.gob.es/Consulados/londres/en/ServiciosConsulares/Paginas/Consular/Digital-Nomad-Visa.aspx",
+      },
+      {
+        label: "Croatian Ministry of the Interior - Digital nomads",
+        url: "https://mup.gov.hr/aliens-281621/stay-and-work/digital-nomads/286833",
+      },
+    ],
+    sections: [
+      {
+        heading: "Freelancers need a story that documents can prove",
+        body:
+          "A freelancer file should make three things clear: what you do, who pays you, and why the work is not local employment in the destination country.",
+      },
+      {
+        heading: "The core evidence bundle",
+        body:
+          "A clean freelancer bundle usually combines contracts, invoices, bank deposits, platform statements, tax registration where relevant, and a short explanation of client location.",
+        bullets: [
+          "Current client agreements or statements of work.",
+          "Recent invoices matched to bank deposits.",
+          "Business registration or tax registration where available.",
+          "Portfolio or website only as supporting evidence, not main income proof.",
+        ],
+      },
+      {
+        heading: "Keep the file understandable",
+        body:
+          "Avoid overwhelming the officer with every invoice ever issued. Use a representative set and a simple table that connects invoice number, client, date, amount, and deposit.",
+      },
+      {
+        heading: "Local-client caution",
+        body:
+          "Some routes restrict local employment or local service provision. If you plan to sell services in the destination country, check the official rule before applying.",
+      },
+    ],
+    faq: [
+      {
+        question: "Can platform income qualify?",
+        answer:
+          "It may, but platform records should connect clearly to deposits and client activity. The official checklist controls what is acceptable.",
+      },
+      {
+        question: "Do I need a registered company?",
+        answer:
+          "Not always. Some freelancers operate without a company, but registration can make evidence cleaner where the route accepts self-employment.",
+      },
+      {
+        question: "Should I translate invoices?",
+        answer:
+          "If the consulate requires translations or the documents are not in an accepted language, translated summaries can help.",
+      },
+    ],
+  },
+  {
+    slug: "europe-digital-nomad-visa-shortlist-method",
+    title: "How to Build a Europe Digital Nomad Visa Shortlist",
+    excerpt:
+      "A practical way to compare Portugal, Spain, Croatia, Estonia, Malta, Greece, Italy, and nearby routes without getting lost.",
+    category: "Europe",
+    author: "Nomad Visa Radar Editorial",
+    date: "2026-06-15",
+    updated: "2026-06-15",
+    readTime: "10 min read",
+    image: blogImages.europe,
+    imageAlt: "Map and laptop used to compare Europe digital nomad visa options",
+    keywords: [
+      "Europe digital nomad visa comparison",
+      "best Europe remote work visa",
+      "Portugal Spain Croatia Estonia Malta digital nomad",
+      "Europe nomad visa shortlist",
+    ],
+    sources: [
+      {
+        label: "Portuguese Ministry of Foreign Affairs visa portal",
+        url: "https://vistos.mne.gov.pt/en/",
+      },
+      {
+        label: "Spanish Consulate in London - Digital Nomad Visa",
+        url: "https://www.exteriores.gob.es/Consulados/londres/en/ServiciosConsulares/Paginas/Consular/Digital-Nomad-Visa.aspx",
+      },
+      {
+        label: "Croatian Ministry of the Interior - Digital nomads",
+        url: "https://mup.gov.hr/aliens-281621/stay-and-work/digital-nomads/286833",
+      },
+    ],
+    sections: [
+      {
+        heading: "Do not start with the prettiest city",
+        body:
+          "Lifestyle matters, but the shortlist should start with eligibility. A beautiful destination is not useful if your income, work structure, family situation, or filing location does not fit the route.",
+      },
+      {
+        heading: "Use five filters first",
+        body:
+          "Before comparing cafes and coworking spaces, filter Europe options by the things that can actually block an application.",
+        bullets: [
+          "Income proof and minimum threshold.",
+          "Employee, freelancer, or founder eligibility.",
+          "Dependent rules and family cost.",
+          "Tax-residence exposure after a long stay.",
+          "Appointment and document timing at your filing location.",
+        ],
+      },
+      {
+        heading: "Match route to personality",
+        body:
+          "Portugal and Spain often fit people who want large expat ecosystems. Estonia fits digitally organized founders and remote professionals. Croatia fits applicants who can respect the no-local-work boundary. Malta fits people who value English-language administration.",
+      },
+      {
+        heading: "Pick two backups",
+        body:
+          "Always keep two backup countries. Appointment delays, income threshold changes, or employer-letter issues can make a favorite route temporarily impractical.",
+      },
+    ],
+    faq: [
+      {
+        question: "Which Europe digital nomad visa is easiest?",
+        answer:
+          "There is no universal easiest option. The easiest route is the one whose official checklist matches your facts.",
+      },
+      {
+        question: "Should families prioritize Europe?",
+        answer:
+          "Europe can be strong for families, but schooling, insurance, housing, and dependent income rules need early research.",
+      },
+      {
+        question: "How many countries should I compare?",
+        answer:
+          "Start with five to eight, then reduce to two primary options and two backups after checking official sources.",
+      },
+    ],
+  },
+  {
+    slug: "official-source-change-monitoring-for-visa-rules",
+    title: "How Official-Source Monitoring Keeps Visa Guides Useful",
+    excerpt:
+      "Why digital nomad visa pages need source dates, confidence notes, and human review before updates go live.",
+    category: "Research",
+    author: "Nomad Visa Radar Editorial",
+    date: "2026-06-15",
+    updated: "2026-06-15",
+    readTime: "8 min read",
+    image: blogImages.checklist,
+    imageAlt: "Editorial source monitoring checklist for visa rule changes",
+    keywords: [
+      "official visa source monitoring",
+      "digital nomad visa updates",
+      "visa rule changes official sources",
+      "human reviewed visa guides",
+    ],
+    sources: [
+      {
+        label: "Google Search Console sitemap guidance",
+        url: "https://support.google.com/webmasters/answer/7451001?hl=en",
+      },
+      {
+        label: "Google AdSense eligibility guidance",
+        url: "https://support.google.com/adsense/answer/9724?hl=en",
+      },
+    ],
+    sections: [
+      {
+        heading: "Visa rules are moving targets",
+        body:
+          "A visa guide can be accurate one month and incomplete the next. Income thresholds, fees, application portals, appointment rules, and dependent requirements can change without a dramatic announcement.",
+      },
+      {
+        heading: "What should be monitored",
+        body:
+          "Useful monitoring focuses on the pages that control real applicant decisions: government portals, embassy pages, consular checklists, eVisa workflows, and immigration authority updates.",
+      },
+      {
+        heading: "Why human review still matters",
+        body:
+          "A source can change without changing the practical rule, and a practical rule can change inside an appointment workflow before a public article is updated. Human review helps avoid publishing misleading automated changes.",
+      },
+      {
+        heading: "What readers should see",
+        body:
+          "Readers deserve last-checked dates, official source links, conservative wording, and clear disclaimers where tax or legal interpretation depends on personal facts.",
+      },
+    ],
+    faq: [
+      {
+        question: "Can automated monitoring replace editors?",
+        answer:
+          "No. Monitoring can find changes, but editors should decide whether the change affects public guidance.",
+      },
+      {
+        question: "Why does last checked matter?",
+        answer:
+          "It tells readers when the source trail was reviewed and helps them decide whether to verify again before applying.",
+      },
+      {
+        question: "Should every guide cite sources?",
+        answer:
+          "Important visa claims should point readers toward official sources wherever possible.",
+      },
+    ],
+  },
+  {
+    slug: "avoid-outdated-digital-nomad-visa-advice",
+    title: "How to Avoid Outdated Digital Nomad Visa Advice",
+    excerpt:
+      "A plain-English method for spotting stale thresholds, copied checklists, and risky social-media visa claims.",
+    category: "Research",
+    author: "Amira Shah",
+    date: "2026-06-15",
+    updated: "2026-06-15",
+    readTime: "8 min read",
+    image: blogImages.remote,
+    imageAlt: "Reader comparing official visa pages against old online advice",
+    keywords: [
+      "outdated digital nomad visa advice",
+      "verify visa requirements",
+      "digital nomad visa official checklist",
+      "remote work visa misinformation",
+    ],
+    sources: [
+      {
+        label: "Official Thailand eVisa portal",
+        url: "https://www.thaievisa.go.th/",
+      },
+      {
+        label: "Estonian e-Residency - Digital Nomad Visa comparison",
+        url: "https://www.e-resident.gov.ee/nomadvisa/",
+      },
+    ],
+    sections: [
+      {
+        heading: "Old advice often looks confident",
+        body:
+          "The problem with outdated visa advice is that it rarely looks outdated. It may have a polished headline, a neat checklist, and numbers that were once correct.",
+      },
+      {
+        heading: "Red flags",
+        body:
+          "Be careful when a page has no source date, no official link, a fixed income number without context, or advice that ignores the consulate where you will actually apply.",
+        bullets: [
+          "No last-updated or last-checked date.",
+          "No link to a government, embassy, consulate, or official portal.",
+          "Broad claims such as guaranteed approval or tax free for everyone.",
+          "Comments showing users had different filing experiences.",
+        ],
+      },
+      {
+        heading: "Use two-source confirmation",
+        body:
+          "For important items, check the national immigration source and the filing-location source. If they conflict, use the more specific filing instruction or contact the authority.",
+      },
+      {
+        heading: "Keep your own notes",
+        body:
+          "Save the official URL, date checked, and screenshots or PDFs when preparing a file. If the page changes before your appointment, you can update the file with less panic.",
+      },
+    ],
+    faq: [
+      {
+        question: "Are social posts useless for visa research?",
+        answer:
+          "No. They can reveal practical issues, but they should not replace official sources.",
+      },
+      {
+        question: "How often should I recheck requirements?",
+        answer:
+          "Recheck before paying fees, before appointments, before travel, and whenever the official portal changes.",
+      },
+      {
+        question: "What if official pages conflict?",
+        answer:
+          "Prioritize the page that controls your filing location and ask the authority or a qualified professional if the issue affects eligibility.",
+      },
+    ],
+  },
+  {
+    slug: "adsense-ready-editorial-quality-for-visa-sites",
+    title: "What High-Quality Editorial Content Looks Like on a Visa Research Site",
+    excerpt:
+      "How original explanations, official sources, correction paths, and useful page structure make visa content more trustworthy.",
+    category: "Editorial",
+    author: "Nomad Visa Radar Editorial",
+    date: "2026-06-15",
+    updated: "2026-06-15",
+    readTime: "8 min read",
+    image: blogImages.checklist,
+    imageAlt: "Editorial quality checklist for a visa research website",
+    keywords: [
+      "high quality visa content",
+      "AdSense ready content",
+      "original editorial guides",
+      "visa website editorial policy",
+    ],
+    sources: [
+      {
+        label: "Google AdSense eligibility guidance",
+        url: "https://support.google.com/adsense/answer/9724?hl=en",
+      },
+      {
+        label: "Nomad Visa Radar Editorial Policy",
+        url: "https://nomad-visa-radar.vercel.app/editorial-policy",
+      },
+    ],
+    sections: [
+      {
+        heading: "Useful content answers the next question",
+        body:
+          "A visa page should not only repeat a requirement. It should explain what the requirement means, where to verify it, what documents usually support it, and what mistakes make the file weaker.",
+      },
+      {
+        heading: "Originality comes from judgment",
+        body:
+          "Many visa pages repeat the same checklist. Better editorial content adds judgment: who the route fits, who should avoid it, what needs professional advice, and where official wording may vary.",
+      },
+      {
+        heading: "Trust pages matter",
+        body:
+          "About, Contact, Privacy, Terms, Disclaimer, Cookie Policy, and Editorial Policy pages help users understand who is responsible and how the site treats data, corrections, and limitations.",
+      },
+      {
+        heading: "The best structure for readers",
+        body:
+          "Strong visa pages lead with practical facts, then explain eligibility, documents, family rules, tax caution, official sources, and next steps. Readers should leave with clearer questions, not false certainty.",
+      },
+    ],
+    faq: [
+      {
+        question: "Does high-quality content guarantee AdSense approval?",
+        answer:
+          "No. Approval is Google's decision, but original, useful, transparent content is a stronger foundation than thin or copied pages.",
+      },
+      {
+        question: "Should visa sites include disclaimers?",
+        answer:
+          "Yes. Immigration and tax decisions depend on personal facts, so informational content should not pretend to be legal advice.",
+      },
+      {
+        question: "Can a data page be high quality?",
+        answer:
+          "Yes, if it adds explanation, source links, update dates, and practical guidance instead of only listing fields.",
+      },
+    ],
+  },
+);
 
 export function getCountryBySlug(slug: string) {
   return countries.find((country) => country.slug === slug);

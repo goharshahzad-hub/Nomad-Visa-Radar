@@ -38,11 +38,20 @@ export const metadata: Metadata = {
     url: siteConfig.url,
     siteName: "Nomad Visa Radar",
     type: "website",
+    images: [
+      {
+        url: siteConfig.socialImage,
+        width: 1200,
+        height: 630,
+        alt: "Nomad Visa Radar digital nomad visa research dashboard",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Nomad Visa Radar",
     description: siteConfig.description,
+    images: [siteConfig.socialImage],
   },
   other: {
     "google-adsense-account": googleAdsenseClientId,
