@@ -18,6 +18,7 @@ export function AuthNav({
   onNavigate?: () => void;
 }) {
   const [user, setUser] = useState<User | null>(null);
+  const [isSigningOut, setIsSigningOut] = useState(false);
 
   useEffect(() => {
     const supabase = getBrowserSupabaseClient();
@@ -63,6 +64,19 @@ export function AuthNav({
     return name || user.email || "Dashboard";
   }, [user]);
 
+  async function handleSignOut() {
+    setIsSigningOut(true);
+    const supabase = getBrowserSupabaseClient();
+
+    if (supabase) {
+      await supabase.auth.signOut();
+    }
+
+    setUser(null);
+    onNavigate?.();
+    window.location.assign("/auth/logout");
+  }
+
   if (!user) {
     return (
       <Link
@@ -89,15 +103,16 @@ export function AuthNav({
         <UserRound className="h-4 w-4 shrink-0" />
         <span className="truncate">{accountLabel}</span>
       </Link>
-      <Link
-        href="/auth/logout"
-        onClick={onNavigate}
+      <button
+        type="button"
+        onClick={handleSignOut}
+        disabled={isSigningOut}
         className={buttonVariants({ variant: "ghost", size: "icon" })}
         aria-label="Log out"
         title="Log out"
       >
         <LogOut className="h-4 w-4" />
-      </Link>
+      </button>
     </div>
   );
 }
