@@ -49,7 +49,7 @@ export default async function AdminPage() {
           Admin review console
         </h1>
         <p className="mt-4 text-lg leading-8 text-muted-foreground">
-          Changes from weekly source monitoring create review tasks here. Nothing auto-publishes; admins approve, reject, or request editorial review.
+          Changes from daily source monitoring create review tasks here. Nothing auto-publishes; admins approve, reject, or request editorial review.
         </p>
       </div>
 

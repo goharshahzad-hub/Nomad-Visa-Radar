@@ -23,7 +23,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...staticRoutes.map((route) => ({
       url: `${siteConfig.url}${route}`,
       lastModified: new Date(),
-      changeFrequency: "weekly" as const,
+      changeFrequency: route === "/countries" || route === "/latest-updates" ? "daily" as const : "weekly" as const,
       priority: route === "" ? 1 : 0.7,
     })),
     ...["portugal-vs-spain", "portugal-vs-spain-vs-croatia"].map((slug) => ({
@@ -35,7 +35,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...countries.map((country) => ({
       url: `${siteConfig.url}/digital-nomad-visa/${country.slug}`,
       lastModified: new Date(country.lastVerified),
-      changeFrequency: "weekly" as const,
+      changeFrequency: "daily" as const,
       priority: 0.9,
     })),
     ...blogPosts.map((post) => ({

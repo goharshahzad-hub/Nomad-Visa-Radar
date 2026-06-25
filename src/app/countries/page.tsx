@@ -183,7 +183,7 @@ export default async function CountriesPage({
             className="h-10 rounded-md border bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-ring"
           >
             <option value="">All regions</option>
-            {["Europe", "Americas", "Asia", "Africa", "Middle East"].map((item) => (
+            {["Europe", "Americas", "Asia", "Africa", "Middle East", "Oceania"].map((item) => (
               <option key={item} value={item}>
                 {item}
               </option>

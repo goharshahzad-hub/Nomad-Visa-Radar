@@ -141,7 +141,7 @@ export function HomePage() {
                     className="h-10 rounded-md border bg-background/80 px-3 text-xs font-medium text-muted-foreground outline-none focus:ring-2 focus:ring-ring"
                   >
                     <option value="">All regions</option>
-                    {["Europe", "Americas", "Asia", "Africa", "Middle East"].map((region) => (
+                    {["Europe", "Americas", "Asia", "Africa", "Middle East", "Oceania"].map((region) => (
                       <option key={region} value={region}>
                         {region}
                       </option>
@@ -190,7 +190,7 @@ export function HomePage() {
               {[
                 ["Active programs", countries.length],
                 ["Avg processing", "32d"],
-                ["Official checks", "weekly"],
+                ["Official checks", "daily"],
               ].map(([label, value]) => (
                 <div key={label} className="rounded-md border bg-background/60 p-4">
                   <p className="font-mono text-2xl font-semibold">{value}</p>
