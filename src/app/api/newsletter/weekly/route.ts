@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { sendEmail } from "@/lib/email";
+import { listSubscribedEmailContacts, sendEmail } from "@/lib/email";
 import { getSupabaseServiceClient } from "@/lib/supabase/server";
 import { latestUpdates } from "@/lib/visa-data";
 
@@ -56,35 +56,32 @@ export async function GET(request: Request) {
     return authError;
   }
 
-  const supabase = getSupabaseServiceClient();
+  const resendContacts = await listSubscribedEmailContacts();
+  let subscriberEmails = resendContacts.ok ? resendContacts.emails : [];
 
-  if (!supabase) {
-    return NextResponse.json({
-      ok: true,
-      mode: "preview",
-      subscribers: 0,
-      sent: 0,
-    });
-  }
+  if (!resendContacts.ok) {
+    const supabase = getSupabaseServiceClient();
+    const { data, error } = supabase
+      ? await supabase.from("newsletter_subscribers").select("email").eq("status", "subscribed")
+      : { data: null, error: new Error("No subscriber storage is configured") };
 
-  const { data, error } = await supabase
-    .from("newsletter_subscribers")
-    .select("email")
-    .eq("status", "subscribed");
+    if (error) {
+      return NextResponse.json({ error: "Could not load subscribers" }, { status: 500 });
+    }
 
-  if (error) {
-    return NextResponse.json({ error: "Could not load subscribers" }, { status: 500 });
+    subscriberEmails = (data ?? []).map((subscriber: { email: string }) => subscriber.email);
   }
 
   let sent = 0;
   let failed = 0;
 
-  for (const subscriber of data ?? []) {
+  for (const email of subscriberEmails) {
     const result = await sendEmail({
-      to: subscriber.email,
+      to: email,
       subject: "Nomad Visa Radar weekly official-source update",
       html: digestHtml(),
       text: digestText(),
+      idempotencyKey: `newsletter-weekly-${new Date().toISOString().slice(0, 10)}-${email}`,
     });
 
     if (result.ok) {
@@ -97,7 +94,7 @@ export async function GET(request: Request) {
   return NextResponse.json(
     {
       ok: failed === 0,
-      subscribers: data?.length ?? 0,
+      subscribers: subscriberEmails.length,
       sent,
       failed,
       delivery: "automatic",

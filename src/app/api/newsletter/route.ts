@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { sendEmail } from "@/lib/email";
+import { sendEmail, subscribeEmailContact } from "@/lib/email";
 import { getSupabaseServiceClient } from "@/lib/supabase/server";
 import { siteConfig } from "@/lib/site";
 
@@ -24,30 +24,40 @@ export async function POST(request: Request) {
   }
 
   const supabase = getSupabaseServiceClient();
-
-  if (!supabase) {
-    return NextResponse.json({ ok: true, mode: "preview" });
-  }
-
   const email = parsed.data.email.trim().toLowerCase();
-  const { error } = await supabase.from("newsletter_subscribers").insert({
-    email,
-    status: "subscribed",
-    subscribed_at: new Date().toISOString(),
-  });
+  let databaseStored = false;
+  let databaseAlreadySubscribed = false;
 
-  if (error?.code === "23505") {
-    return NextResponse.json({ ok: true, alreadySubscribed: true });
+  if (supabase) {
+    const { error } = await supabase.from("newsletter_subscribers").insert({
+      email,
+      status: "subscribed",
+      subscribed_at: new Date().toISOString(),
+    });
+
+    if (!error) {
+      databaseStored = true;
+    } else if (error.code === "23505") {
+      databaseStored = true;
+      databaseAlreadySubscribed = true;
+    } else {
+      console.warn("Newsletter Supabase copy unavailable", {
+        code: error.code,
+        message: error.message,
+      });
+    }
   }
 
-  if (error) {
-    console.error("Newsletter subscription failed", {
-      code: error.code,
-      message: error.message,
+  const contact = await subscribeEmailContact(email);
+
+  if (!contact.ok && !databaseStored) {
+    console.error("Newsletter subscription storage failed", {
+      mode: contact.mode,
+      error: contact.error,
     });
     return NextResponse.json(
       { error: "Could not save newsletter subscription" },
-      { status: 500 },
+      { status: 503 },
     );
   }
 
@@ -72,5 +82,10 @@ export async function POST(request: Request) {
     });
   }
 
-  return NextResponse.json({ ok: true, confirmationSent: confirmation.ok });
+  return NextResponse.json({
+    ok: true,
+    alreadySubscribed: databaseAlreadySubscribed || (contact.ok && contact.alreadySubscribed),
+    confirmationSent: confirmation.ok,
+    storage: contact.ok ? "resend" : "supabase",
+  });
 }
