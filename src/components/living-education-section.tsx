@@ -19,7 +19,7 @@ export function LivingEducationSection({ country }: { country: VisaCountry }) {
       </div>
 
       <div className="mt-6 grid gap-4 lg:grid-cols-2">
-        <div className="rounded-lg border bg-background/60 p-5">
+        <div className="min-w-0 rounded-lg border bg-background/60 p-5">
           <div className="flex items-center gap-2">
             <Home className="h-5 w-5 text-primary" />
             <h3 className="font-semibold">Monthly living for one person</h3>
@@ -32,7 +32,7 @@ export function LivingEducationSection({ country }: { country: VisaCountry }) {
           </p>
         </div>
 
-        <div className="rounded-lg border bg-background/60 p-5">
+        <div className="min-w-0 rounded-lg border bg-background/60 p-5">
           <div className="flex items-center gap-2">
             <MapPin className="h-5 w-5 text-primary" />
             <h3 className="font-semibold">Best destination cities</h3>
@@ -46,7 +46,7 @@ export function LivingEducationSection({ country }: { country: VisaCountry }) {
           </div>
         </div>
 
-        <div className="rounded-lg border bg-background/60 p-5">
+        <div className="min-w-0 rounded-lg border bg-background/60 p-5">
           <div className="flex items-center gap-2">
             <School className="h-5 w-5 text-primary" />
             <h3 className="font-semibold">Schooling options</h3>
@@ -55,30 +55,30 @@ export function LivingEducationSection({ country }: { country: VisaCountry }) {
             {details.schoolingSummary}
           </p>
           <div className="mt-4 grid gap-3 text-sm">
-            <div className="flex justify-between gap-4 rounded-md bg-muted/60 p-3">
+            <div className="flex flex-col gap-2 rounded-md bg-muted/60 p-3 sm:flex-row sm:justify-between sm:gap-4">
               <span className="text-muted-foreground">Public schools</span>
-              <span className="max-w-[15rem] text-right font-medium">{details.publicSchoolAnnualUsd}</span>
+              <span className="break-words font-medium sm:max-w-[15rem] sm:text-right">{details.publicSchoolAnnualUsd}</span>
             </div>
-            <div className="flex justify-between gap-4 rounded-md bg-muted/60 p-3">
+            <div className="flex flex-col gap-2 rounded-md bg-muted/60 p-3 sm:flex-row sm:justify-between sm:gap-4">
               <span className="text-muted-foreground">Private/international schools</span>
-              <span className="text-right font-medium">{details.privateSchoolAnnualUsd}</span>
+              <span className="break-words font-medium sm:text-right">{details.privateSchoolAnnualUsd}</span>
             </div>
           </div>
         </div>
 
-        <div className="rounded-lg border bg-background/60 p-5">
+        <div className="min-w-0 rounded-lg border bg-background/60 p-5">
           <div className="flex items-center gap-2">
             <GraduationCap className="h-5 w-5 text-primary" />
             <h3 className="font-semibold">College and university options</h3>
           </div>
           <div className="mt-4 grid gap-3 text-sm">
-            <div className="flex justify-between gap-4 rounded-md bg-muted/60 p-3">
+            <div className="flex flex-col gap-2 rounded-md bg-muted/60 p-3 sm:flex-row sm:justify-between sm:gap-4">
               <span className="text-muted-foreground">Public colleges/universities</span>
-              <span className="text-right font-medium">{details.publicCollegeAnnualUsd}</span>
+              <span className="break-words font-medium sm:text-right">{details.publicCollegeAnnualUsd}</span>
             </div>
-            <div className="flex justify-between gap-4 rounded-md bg-muted/60 p-3">
+            <div className="flex flex-col gap-2 rounded-md bg-muted/60 p-3 sm:flex-row sm:justify-between sm:gap-4">
               <span className="text-muted-foreground">Private colleges/universities</span>
-              <span className="text-right font-medium">{details.privateCollegeAnnualUsd}</span>
+              <span className="break-words font-medium sm:text-right">{details.privateCollegeAnnualUsd}</span>
             </div>
           </div>
           <div className="mt-4 flex flex-wrap gap-2">

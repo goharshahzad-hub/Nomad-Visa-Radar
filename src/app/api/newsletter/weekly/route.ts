@@ -35,7 +35,7 @@ function digestHtml() {
 
   return `
     <h1>Nomad Visa Radar weekly update</h1>
-    <p>Official-source changes are reviewed by humans before publication.</p>
+    <p>Daily source checks run automatically. Material visa-rule changes are verified before the country guidance is rewritten.</p>
     <ul>${items}</ul>
   `;
 }
@@ -100,7 +100,7 @@ export async function GET(request: Request) {
       subscribers: data?.length ?? 0,
       sent,
       failed,
-      auto_published: false,
+      delivery: "automatic",
     },
     { status: failed === 0 ? 200 : 500 },
   );

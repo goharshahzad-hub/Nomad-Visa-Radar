@@ -52,14 +52,18 @@ function CountryDirectoryCard({
             </span>
           </div>
 
-          <div className="mt-5 grid gap-3 text-sm">
-            <div className="flex items-center justify-between gap-3">
-              <span className="flex items-center gap-2 text-muted-foreground">
-                <DollarSign className="h-4 w-4 text-primary" />
-                Income
-              </span>
-              <span className="font-medium">{formatCurrency(country.minimumIncomeMonthlyUsd)}/mo</span>
-            </div>
+          <div className="mt-5 rounded-md border border-primary/30 bg-primary/5 p-3">
+            <p className="flex items-center gap-2 text-xs font-semibold uppercase text-primary">
+              <DollarSign className="h-4 w-4" />
+              Eligibility income
+            </p>
+            <p className="mt-1 font-semibold leading-6">{country.minimumIncome}</p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Approx. {formatCurrency(country.minimumIncomeMonthlyUsd)}/month for comparison
+            </p>
+          </div>
+
+          <div className="mt-4 grid gap-3 text-sm">
             <div className="flex items-center justify-between gap-3">
               <span className="flex items-center gap-2 text-muted-foreground">
                 <Clock3 className="h-4 w-4 text-primary" />

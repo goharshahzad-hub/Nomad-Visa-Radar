@@ -310,7 +310,7 @@ export function HomePage() {
         />
         <div className="mt-10 grid gap-4 md:grid-cols-3">
           {[
-            ["Does the system auto-publish changes?", "No. Every detected change becomes an admin review task first."],
+            ["Does the system publish automatically?", "Production changes merged to the main branch deploy automatically. Daily source checks also refresh monitoring status, while substantive visa-rule changes are verified before the guidance is rewritten."],
             ["Can users save countries?", "Yes. Authenticated users can save favorites, alerts, newsletter settings, and comparison history."],
             ["Is this legal advice?", "No. The product links official sources and explains requirements, but users should consult licensed professionals."],
           ].map(([question, answer]) => (

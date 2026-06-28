@@ -86,6 +86,10 @@ export default async function CountryPage({
   const incomeRequirement = formatMinimumIncomeRequirement(country);
   const documentsRequired = getDocumentsRequired(country);
   const guidance = getCountryEditorialGuidance(country);
+  const incomeCostGap = country.minimumIncomeMonthlyUsd - country.costOfLivingMonthlyUsd;
+  const incomeCostRatio = country.costOfLivingMonthlyUsd > 0
+    ? country.minimumIncomeMonthlyUsd / country.costOfLivingMonthlyUsd
+    : 0;
   const facts: { label: string; value: string; icon: LucideIcon }[] = [
     { label: "Minimum income", value: incomeRequirement, icon: BadgeDollarSign },
     { label: "Duration", value: country.duration, icon: Clock3 },
@@ -195,7 +199,37 @@ export default async function CountryPage({
       </section>
 
       <section className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[1fr_340px] lg:px-8">
-        <article className="space-y-8">
+        <article className="min-w-0 space-y-8">
+          <section className="rounded-lg border border-primary/30 bg-primary/5 p-6">
+            <Badge variant="outline">Income qualification first</Badge>
+            <h2 className="mt-3 text-2xl font-semibold">
+              Eligibility income for {country.countryName}
+            </h2>
+            <p className="mt-3 text-xl font-semibold leading-8">{country.minimumIncome}</p>
+            <p className="mt-2 leading-7 text-muted-foreground">
+              For cross-country comparison, Nomad Visa Radar normalizes this to approximately {formatCurrency(country.minimumIncomeMonthlyUsd)} per month. The official wording above controls; the USD figure is a planning estimate and can move with exchange rates.
+            </p>
+            <div className="mt-6 grid gap-4 sm:grid-cols-3">
+              <div className="rounded-md border bg-background p-4">
+                <p className="text-xs font-semibold uppercase text-muted-foreground">Official requirement</p>
+                <p className="mt-2 font-semibold">{country.minimumIncome}</p>
+              </div>
+              <div className="rounded-md border bg-background p-4">
+                <p className="text-xs font-semibold uppercase text-muted-foreground">Estimated solo living cost</p>
+                <p className="mt-2 font-semibold">{formatCurrency(country.costOfLivingMonthlyUsd)}/month</p>
+              </div>
+              <div className="rounded-md border bg-background p-4">
+                <p className="text-xs font-semibold uppercase text-muted-foreground">Threshold-to-cost gap</p>
+                <p className="mt-2 font-semibold">
+                  {incomeCostGap >= 0 ? "+" : ""}{formatCurrency(incomeCostGap)}/month
+                </p>
+              </div>
+            </div>
+            <p className="mt-5 text-sm leading-6 text-muted-foreground">
+              The normalized income threshold is about {incomeCostRatio.toFixed(1)}x the estimated solo living cost. This comparison helps with shortlisting; it is not a household budget or a substitute for the authority&apos;s current exchange-rate and dependent rules.
+            </p>
+          </section>
+
           <CountryHighlightsSlider country={country} />
           <MobilityPathwaySection country={country} />
           <LivingEducationSection country={country} />

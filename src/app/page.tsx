@@ -8,10 +8,10 @@ export default function Page() {
     mainEntity: [
       {
         "@type": "Question",
-        name: "Does Nomad Visa Radar auto-publish detected visa changes?",
+        name: "What does Nomad Visa Radar publish automatically?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "No. Detected changes create admin review tasks and require human approval before publication.",
+          text: "Production changes merged to the main branch deploy automatically, and daily source checks refresh monitoring status. Substantive visa-rule changes are verified before the guidance is rewritten.",
         },
       },
       {

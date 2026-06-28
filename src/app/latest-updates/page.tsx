@@ -44,7 +44,7 @@ export default function LatestUpdatesPage() {
           Latest digital nomad visa updates
         </h1>
         <p className="mt-4 text-lg leading-8 text-muted-foreground">
-          A public changelog for new countries, removed programs, fee changes, requirements, and daily official-source checks. Updates are never auto-published without admin review.
+          A public changelog for new countries, removed programs, fee changes, requirements, and daily official-source checks. Source-check status refreshes automatically; substantive visa guidance is verified before it is rewritten.
         </p>
         <ShareActions
           title="Latest digital nomad visa updates"

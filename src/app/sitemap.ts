@@ -4,6 +4,7 @@ import { siteConfig } from "@/lib/site";
 import { slugify } from "@/lib/utils";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const siteLastModified = new Date("2026-06-28");
   const staticRoutes = [
     "",
     "/countries",
@@ -22,13 +23,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     ...staticRoutes.map((route) => ({
       url: `${siteConfig.url}${route}`,
-      lastModified: new Date(),
+      lastModified: siteLastModified,
       changeFrequency: route === "/countries" || route === "/latest-updates" ? "daily" as const : "weekly" as const,
       priority: route === "" ? 1 : 0.7,
     })),
     ...["portugal-vs-spain", "portugal-vs-spain-vs-croatia"].map((slug) => ({
       url: `${siteConfig.url}/compare/${slug}`,
-      lastModified: new Date(),
+      lastModified: siteLastModified,
       changeFrequency: "weekly" as const,
       priority: 0.8,
     })),
@@ -40,19 +41,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
     ...blogPosts.map((post) => ({
       url: `${siteConfig.url}/blog/${post.slug}`,
-      lastModified: new Date(post.date),
+      lastModified: new Date(post.updated),
       changeFrequency: "monthly" as const,
       priority: 0.75,
     })),
     ...Array.from(new Set(blogPosts.map((post) => slugify(post.category)))).map((category) => ({
       url: `${siteConfig.url}/blog/category/${category}`,
-      lastModified: new Date(),
+      lastModified: siteLastModified,
       changeFrequency: "monthly" as const,
       priority: 0.65,
     })),
     ...Array.from(new Set(blogPosts.map((post) => slugify(post.author)))).map((author) => ({
       url: `${siteConfig.url}/author/${author}`,
-      lastModified: new Date(),
+      lastModified: siteLastModified,
       changeFrequency: "monthly" as const,
       priority: 0.6,
     })),

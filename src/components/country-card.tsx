@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, Clock, DollarSign, FileText, Users } from "lucide-react";
+import { ArrowUpRight, Clock, FileText, Users } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { CountryFlag } from "@/components/country-flag";
@@ -50,11 +50,14 @@ export function CountryCard({
               {country.nomadScore}
             </div>
           </div>
-          <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
-            <div className="flex items-center gap-2 text-muted-foreground">
-              <DollarSign className="h-4 w-4 text-primary" />
-              {formatCurrency(country.minimumIncomeMonthlyUsd)}/mo
-            </div>
+          <div className="mt-5 rounded-md border border-primary/30 bg-primary/5 p-3">
+            <p className="text-xs font-semibold uppercase text-primary">Eligibility income</p>
+            <p className="mt-1 font-semibold leading-6">{country.minimumIncome}</p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Approx. {formatCurrency(country.minimumIncomeMonthlyUsd)}/month for comparison
+            </p>
+          </div>
+          <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
             <div className="flex items-center gap-2 text-muted-foreground">
               <Clock className="h-4 w-4 text-primary" />
               {country.processingTime}

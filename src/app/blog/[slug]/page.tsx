@@ -231,7 +231,7 @@ export default async function BlogPostPage({
         <div className="mt-10 rounded-lg border bg-card p-6 text-center">
           <h2 className="text-2xl font-semibold">Get weekly visa intelligence</h2>
           <p className="mt-2 text-muted-foreground">
-            Official-source updates, reviewed by humans before publication.
+            Daily official-source monitoring with material changes verified before guidance is rewritten.
           </p>
           <div className="mt-6">
             <NewsletterForm />

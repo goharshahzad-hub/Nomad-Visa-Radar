@@ -3257,6 +3257,20 @@ export type AuthorProfile = {
 };
 
 export const authorProfiles: Record<string, AuthorProfile> = {
+  [slugify("Gohar Shahzad")]: {
+    name: "Gohar Shahzad",
+    role: "Founder and editor",
+    bio:
+      "Gohar Shahzad maintains Nomad Visa Radar as an independent research project. The work focuses on turning official immigration and government material into practical comparisons while preserving direct source links and visible verification dates.",
+    focus: [
+      "Official immigration source research",
+      "Digital nomad visa comparisons",
+      "Income, document, and family planning",
+      "Corrections and source-change monitoring",
+    ],
+    reviewStandard:
+      "A material visa claim should point to an official source, state when it was checked, distinguish official requirements from planning estimates, and be corrected when stronger evidence becomes available.",
+  },
   [slugify("Nomad Visa Radar Editorial")]: {
     name: "Nomad Visa Radar Editorial",
     role: "Editorial research desk",
@@ -3509,7 +3523,7 @@ const blogImages = {
     "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1400&q=80",
 };
 
-export const blogPosts: BlogPost[] = [
+const allBlogPosts: BlogPost[] = [
   {
     slug: "best-digital-nomad-visas-for-families",
     title: "Best Digital Nomad Visas for Families in 2026",
@@ -4501,7 +4515,7 @@ export const blogPosts: BlogPost[] = [
   },
 ];
 
-blogPosts.push(
+allBlogPosts.push(
   {
     slug: "digital-nomad-visa-income-proof-guide",
     title: "How to Prepare Income Proof for a Digital Nomad Visa",
@@ -5236,6 +5250,21 @@ blogPosts.push(
     ],
   },
 );
+
+const sourceBackedGuideSlugs = new Set([
+  "portugal-d8-remote-work-visa-official-source-guide",
+  "spain-digital-nomad-visa-official-source-guide",
+  "croatia-digital-nomad-temporary-stay-guide",
+  "estonia-digital-nomad-visa-vs-e-residency-guide",
+  "thailand-destination-thailand-visa-dtv-guide",
+  "malta-nomad-residence-permit-official-guide",
+  "how-to-check-official-digital-nomad-visa-sources",
+  "digital-nomad-visa-income-proof-guide",
+]);
+
+export const blogPosts: BlogPost[] = allBlogPosts
+  .filter((post) => sourceBackedGuideSlugs.has(post.slug) && (post.sources?.length ?? 0) > 0)
+  .map((post) => ({ ...post, author: "Gohar Shahzad" }));
 
 export function getCountryBySlug(slug: string) {
   return countries.find((country) => country.slug === slug);

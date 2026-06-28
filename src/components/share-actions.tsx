@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { Copy, Linkedin, Mail, MessageCircle, Send, Share2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { siteConfig } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 type ShareActionsProps = {
@@ -16,13 +17,7 @@ type ShareActionsProps = {
 
 function absoluteShareUrl(url?: string) {
   if (url?.startsWith("http")) return url;
-
-  if (typeof window !== "undefined") {
-    const path = url || `${window.location.pathname}${window.location.search}`;
-    return new URL(path, window.location.origin).toString();
-  }
-
-  return url || "/";
+  return new URL(url || "/", siteConfig.url).toString();
 }
 
 export function ShareActions({

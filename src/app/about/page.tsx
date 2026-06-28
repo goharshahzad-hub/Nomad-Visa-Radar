@@ -25,11 +25,21 @@ export default function AboutPage() {
         before a decision. We do not sell visas, guarantee approvals, or replace
         immigration or tax professionals.
       </p>
+      <h2 className="text-xl font-semibold text-foreground">Who runs the site</h2>
+      <p>
+        Nomad Visa Radar is founded and edited by Gohar Shahzad. The site is an
+        independent research project, not an immigration agency or government
+        service. Country pages combine direct official-source links with a
+        structured comparison model so readers can identify which questions to
+        verify before applying.
+      </p>
       <p>
         The product combines structured country data, official-source links,
         editorial review workflows, saved-country tools, alerts, comparison
-        history, and newsletters. Substantive visa updates are reviewed before
-        publication, and important guides point readers back to government,
+        history, and newsletters. Production changes merged into the main code
+        branch deploy automatically. Daily monitoring timestamps refresh from
+        source checks, while substantive visa-rule changes are verified before
+        the guidance is rewritten. Important guides point readers back to government,
         embassy, immigration, or official application sources wherever possible.
       </p>
       <p>

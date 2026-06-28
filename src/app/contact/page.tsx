@@ -13,8 +13,10 @@ export default function ContactPage() {
     <SimplePage eyebrow="Contact" title="Contact the editorial team">
       <p>
         Send corrections, official-source updates, partnership notes, or product
-        feedback. Source updates are reviewed before anything goes live, and
-        specific visa questions should still be confirmed with official
+        feedback. Daily source-check status updates automatically; reported
+        changes to income, fees, eligibility, or legal rules are verified before
+        the guidance is rewritten. Specific
+        visa questions should still be confirmed with official
         authorities or qualified professionals.
       </p>
       <p>

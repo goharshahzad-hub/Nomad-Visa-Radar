@@ -13,20 +13,34 @@ export function NewsletterForm({ compact = false }: { compact?: boolean }) {
   async function subscribe(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
-    const response = await fetch("/api/newsletter", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
-    });
-    setLoading(false);
+    try {
+      const response = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const result = (await response.json().catch(() => null)) as
+        | { alreadySubscribed?: boolean; confirmationSent?: boolean }
+        | null;
 
-    if (response.ok) {
-      setEmail("");
-      toast.success("You are on the radar.");
-      return;
+      if (response.ok) {
+        setEmail("");
+        toast.success(
+          result?.alreadySubscribed
+            ? "You are already subscribed."
+            : result?.confirmationSent
+              ? "Subscribed. Check your inbox for confirmation."
+              : "Subscribed. Your first weekly update will arrive by email.",
+        );
+        return;
+      }
+
+      toast.error("Could not subscribe right now. Please try again.");
+    } catch {
+      toast.error("Could not reach the subscription service. Please try again.");
+    } finally {
+      setLoading(false);
     }
-
-    toast.error("Could not subscribe right now.");
   }
 
   return (

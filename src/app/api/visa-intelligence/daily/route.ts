@@ -166,6 +166,7 @@ export async function GET(request: Request) {
     official_pages_checked: results.length,
     changed_pages: results.filter((result) => result.changed).length,
     failed_pages: results.filter((result) => !result.ok).length,
-    auto_published: false,
+    monitoring_status_published: true,
+    substantive_changes_require_verification: true,
   });
 }
