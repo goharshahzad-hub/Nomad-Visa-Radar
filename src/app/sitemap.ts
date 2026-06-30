@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { getRichBlogArticle } from "@/lib/blog-articles";
 import { blogPosts, countries } from "@/lib/visa-data";
 import { siteConfig } from "@/lib/site";
 import { slugify } from "@/lib/utils";
@@ -41,7 +42,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
     ...blogPosts.map((post) => ({
       url: `${siteConfig.url}/blog/${post.slug}`,
-      lastModified: new Date(post.updated),
+      lastModified: new Date(getRichBlogArticle(post.slug)?.reviewedDate ?? post.updated),
       changeFrequency: "monthly" as const,
       priority: 0.75,
     })),

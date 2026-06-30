@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { Clock3 } from "lucide-react";
+import { ArrowUpRight, Clock3 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { ShareActions } from "@/components/share-actions";
+import { getRichArticleReadTime, getRichBlogArticle } from "@/lib/blog-articles";
 import { blogPosts } from "@/lib/visa-data";
 import { siteConfig } from "@/lib/site";
 import { slugify } from "@/lib/utils";
@@ -33,6 +34,7 @@ export const metadata: Metadata = {
 
 export default function BlogPage() {
   const categories = Array.from(new Set(blogPosts.map((post) => post.category)));
+  const [featuredPost, ...remainingPosts] = blogPosts;
   const schema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -44,7 +46,7 @@ export default function BlogPage() {
       headline: post.title,
       url: `${siteConfig.url}/blog/${post.slug}`,
       image: post.image,
-      dateModified: post.updated,
+      dateModified: getRichBlogArticle(post.slug)?.reviewedDate ?? post.updated,
     })),
   };
 
@@ -74,8 +76,44 @@ export default function BlogPage() {
           </Link>
         ))}
       </div>
+
+      {featuredPost && (
+        <section className="mt-10 grid overflow-hidden border-y py-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
+          <div className="relative min-h-72 overflow-hidden rounded-lg">
+            <Image
+              src={featuredPost.image}
+              alt={featuredPost.imageAlt}
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 55vw"
+              className="object-cover"
+            />
+          </div>
+          <div className="flex flex-col justify-center py-7 lg:py-4">
+            <p className="text-sm font-semibold text-primary">Featured guide</p>
+            <h2 className="mt-3 text-3xl font-semibold leading-tight">
+              <Link href={`/blog/${featuredPost.slug}`} className="hover:text-primary">
+                {featuredPost.title}
+              </Link>
+            </h2>
+            <p className="mt-4 leading-7 text-muted-foreground">{featuredPost.excerpt}</p>
+            <div className="mt-5 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+              <span>{featuredPost.author}</span>
+              <span>Updated {getRichBlogArticle(featuredPost.slug)?.reviewedDate ?? featuredPost.updated}</span>
+              <span>{getRichArticleReadTime(featuredPost.slug, featuredPost.readTime)}</span>
+            </div>
+            <Link
+              href={`/blog/${featuredPost.slug}`}
+              className="mt-6 inline-flex w-fit items-center gap-2 text-sm font-semibold text-primary"
+            >
+              Read the complete guide <ArrowUpRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </section>
+      )}
+
       <div className="mt-8 grid gap-5 md:grid-cols-3">
-        {blogPosts.map((post) => (
+        {remainingPosts.map((post) => (
           <Card key={post.slug} className="flex h-full flex-col overflow-hidden transition hover:-translate-y-1 hover:shadow-xl">
             <Link href={`/blog/${post.slug}`} className="block flex-1">
               <div className="relative h-44">
@@ -105,7 +143,7 @@ export default function BlogPage() {
                   </div>
                   <div className="mt-6 flex items-center gap-2 text-sm text-muted-foreground">
                     <Clock3 className="h-4 w-4" />
-                    {post.readTime} - {post.date}
+                    {getRichArticleReadTime(post.slug, post.readTime)} - Updated {getRichBlogArticle(post.slug)?.reviewedDate ?? post.updated}
                   </div>
                 </div>
               </Link>

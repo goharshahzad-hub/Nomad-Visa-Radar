@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { ShareActions } from "@/components/share-actions";
+import { getRichArticleReadTime, getRichBlogArticle } from "@/lib/blog-articles";
 import { blogPosts } from "@/lib/visa-data";
 import { siteConfig } from "@/lib/site";
 import { slugify } from "@/lib/utils";
@@ -76,6 +77,9 @@ export default async function CategoryPage({
               <div className="p-6">
                 <h2 className="font-semibold">{post.title}</h2>
                 <p className="mt-2 text-sm text-muted-foreground">{post.excerpt}</p>
+                <p className="mt-4 text-xs text-muted-foreground">
+                  Updated {getRichBlogArticle(post.slug)?.reviewedDate ?? post.updated} - {getRichArticleReadTime(post.slug, post.readTime)}
+                </p>
               </div>
             </Link>
             <div className="border-t px-6 py-3">
