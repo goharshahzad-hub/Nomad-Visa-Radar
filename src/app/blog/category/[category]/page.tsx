@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { ShareActions } from "@/components/share-actions";
 import { getRichArticleReadTime, getRichBlogArticle } from "@/lib/blog-articles";
+import { getPublicBlogPosts } from "@/lib/managed-content";
 import { blogPosts } from "@/lib/visa-data";
 import { siteConfig } from "@/lib/site";
 import { slugify } from "@/lib/utils";
@@ -22,7 +23,8 @@ export async function generateMetadata({
   params: Promise<{ category: string }>;
 }): Promise<Metadata> {
   const { category } = await params;
-  const posts = blogPosts.filter((post) => slugify(post.category) === category);
+  const allPosts = await getPublicBlogPosts();
+  const posts = allPosts.filter((post) => slugify(post.category) === category);
   const title = posts[0]?.category ?? category;
 
   return {
@@ -40,7 +42,8 @@ export default async function CategoryPage({
   params: Promise<{ category: string }>;
 }) {
   const { category } = await params;
-  const posts = blogPosts.filter((post) => slugify(post.category) === category);
+  const allPosts = await getPublicBlogPosts();
+  const posts = allPosts.filter((post) => slugify(post.category) === category);
 
   if (!posts.length) {
     notFound();
@@ -78,7 +81,7 @@ export default async function CategoryPage({
                 <h2 className="font-semibold">{post.title}</h2>
                 <p className="mt-2 text-sm text-muted-foreground">{post.excerpt}</p>
                 <p className="mt-4 text-xs text-muted-foreground">
-                  Updated {getRichBlogArticle(post.slug)?.reviewedDate ?? post.updated} - {getRichArticleReadTime(post.slug, post.readTime)}
+                  Updated {post.managed ? post.updated : getRichBlogArticle(post.slug)?.reviewedDate ?? post.updated} - {post.managed ? post.readTime : getRichArticleReadTime(post.slug, post.readTime)}
                 </p>
               </div>
             </Link>

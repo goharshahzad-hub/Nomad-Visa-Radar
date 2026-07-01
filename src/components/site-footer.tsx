@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Globe2 } from "lucide-react";
+import { getSiteSection } from "@/lib/managed-content";
 
 const footerGroups = [
   {
@@ -31,7 +32,8 @@ const footerGroups = [
   },
 ];
 
-export function SiteFooter() {
+export async function SiteFooter() {
+  const footer = await getSiteSection("footer-description");
   return (
     <footer className="border-t bg-background">
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-[1.4fr_2fr] lg:px-8">
@@ -43,7 +45,7 @@ export function SiteFooter() {
             <span className="font-semibold">Nomad Visa Radar</span>
           </div>
           <p className="mt-4 max-w-sm text-sm leading-6 text-muted-foreground">
-            Visa intelligence for remote workers, relocation teams, and publishers who need official-source review before guidance goes live.
+            {footer?.body ?? "Visa intelligence for remote workers, relocation teams, and publishers who need official-source review before guidance goes live."}
           </p>
         </div>
         <div className="grid gap-6 sm:grid-cols-3">

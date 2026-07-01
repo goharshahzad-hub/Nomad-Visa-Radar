@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/card";
 import { NewsletterForm } from "@/components/newsletter-form";
 import { ShareActions } from "@/components/share-actions";
 import { getRichArticleReadTime, getRichBlogArticle } from "@/lib/blog-articles";
+import { getPublicBlogPosts } from "@/lib/managed-content";
 import { blogPosts, getAuthorProfile } from "@/lib/visa-data";
 import { siteConfig } from "@/lib/site";
 import { slugify } from "@/lib/utils";
@@ -21,11 +22,12 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const post = blogPosts.find((item) => item.slug === slug);
+  const posts = await getPublicBlogPosts();
+  const post = posts.find((item) => item.slug === slug);
 
   if (!post) return {};
 
-  const richArticle = getRichBlogArticle(slug);
+  const richArticle = post.managed ? undefined : getRichBlogArticle(slug);
 
   return {
     title: post.title,
@@ -57,18 +59,19 @@ export default async function BlogPostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = blogPosts.find((item) => item.slug === slug);
+  const posts = await getPublicBlogPosts();
+  const post = posts.find((item) => item.slug === slug);
 
   if (!post) {
     notFound();
   }
 
   const authorProfile = getAuthorProfile(post.author);
-  const richArticle = getRichBlogArticle(post.slug);
-  const readTime = getRichArticleReadTime(post.slug, post.readTime);
+  const richArticle = post.managed ? undefined : getRichBlogArticle(post.slug);
+  const readTime = post.managed ? post.readTime : getRichArticleReadTime(post.slug, post.readTime);
   const sources = richArticle?.sources ?? post.sources ?? [];
   const faq = richArticle?.faq ?? post.faq;
-  const relatedPosts = blogPosts.filter((item) => item.slug !== post.slug).slice(0, 3);
+  const relatedPosts = posts.filter((item) => item.slug !== post.slug).slice(0, 3);
 
   const articleSchema = {
     "@context": "https://schema.org",

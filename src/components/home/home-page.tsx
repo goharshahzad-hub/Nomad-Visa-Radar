@@ -77,7 +77,11 @@ function CountryRail({
   );
 }
 
-export function HomePage() {
+export function HomePage({
+  hero,
+}: {
+  hero?: { title: string; description: string };
+}) {
   return (
     <div className="overflow-hidden">
       <section className="noise relative border-b">
@@ -93,10 +97,10 @@ export function HomePage() {
               Official-source visa intelligence
             </Badge>
             <h1 className="mt-6 max-w-4xl text-4xl font-semibold tracking-normal sm:text-5xl lg:text-6xl">
-              Search Digital Nomad Visa Requirements Worldwide
+              {hero?.title ?? "Search Digital Nomad Visa Requirements Worldwide"}
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
-              Compare income thresholds, taxes, dependents, processing speed, and lifestyle scores across active remote worker and freelancer visa programs.
+              {hero?.description ?? "Compare income thresholds, taxes, dependents, processing speed, and lifestyle scores across active remote worker and freelancer visa programs."}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link href="/countries" className={cn(buttonVariants({ size: "lg", variant: "premium" }))}>

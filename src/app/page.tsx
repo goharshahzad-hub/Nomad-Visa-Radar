@@ -1,7 +1,9 @@
 import { HomePage } from "@/components/home/home-page";
+import { getSiteSection } from "@/lib/managed-content";
 import { siteConfig } from "@/lib/site";
 
-export default function Page() {
+export default async function Page() {
+  const hero = await getSiteSection("home-hero");
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -27,7 +29,7 @@ export default function Page() {
 
   return (
     <>
-      <HomePage />
+      <HomePage hero={hero ? { title: hero.title, description: hero.body } : undefined} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}

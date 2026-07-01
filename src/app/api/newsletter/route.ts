@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { sendEmail, subscribeEmailContact } from "@/lib/email";
+import { buildWelcomeNewsletterEmail } from "@/lib/newsletter-email";
+import { createUnsubscribeUrl } from "@/lib/newsletter-token";
 import { getSupabaseServiceClient } from "@/lib/supabase/server";
-import { siteConfig } from "@/lib/site";
 
 const schema = z.object({
   email: z.string().email(),
+  firstName: z.string().trim().max(60).optional().default(""),
 });
 
 export async function POST(request: Request) {
@@ -25,6 +27,7 @@ export async function POST(request: Request) {
 
   const supabase = getSupabaseServiceClient();
   const email = parsed.data.email.trim().toLowerCase();
+  const firstName = parsed.data.firstName.trim();
   let databaseStored = false;
   let databaseAlreadySubscribed = false;
 
@@ -48,7 +51,7 @@ export async function POST(request: Request) {
     }
   }
 
-  const contact = await subscribeEmailContact(email);
+  const contact = await subscribeEmailContact(email, firstName);
 
   if (!contact.ok && !databaseStored) {
     console.error("Newsletter subscription storage failed", {
@@ -61,17 +64,15 @@ export async function POST(request: Request) {
     );
   }
 
+  const welcome = buildWelcomeNewsletterEmail({
+    firstName,
+    unsubscribeUrl: createUnsubscribeUrl(email),
+  });
   const confirmation = await sendEmail({
     to: email,
-    subject: "You are subscribed to Nomad Visa Radar",
-    html: `
-      <h1>Welcome to Nomad Visa Radar</h1>
-      <p>Your email is subscribed to the weekly official-source visa update.</p>
-      <p>We monitor government and immigration pages daily. Material requirement changes are checked before the country guidance is rewritten.</p>
-      <p><a href="${siteConfig.url}/latest-updates">View the latest visa updates</a></p>
-      <p>You can reply to any newsletter if something looks outdated.</p>
-    `,
-    text: `Welcome to Nomad Visa Radar. Your email is subscribed to the weekly official-source visa update. View updates at ${siteConfig.url}/latest-updates`,
+    subject: welcome.subject,
+    html: welcome.html,
+    text: welcome.text,
     idempotencyKey: `newsletter-welcome-${email}`,
   });
 

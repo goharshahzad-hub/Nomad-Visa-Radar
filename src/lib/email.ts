@@ -63,7 +63,12 @@ export async function sendEmail({ to, subject, html, text, replyTo, idempotencyK
   return { ok: true, mode: "email" as const };
 }
 
-export async function subscribeEmailContact(email: string) {
+export type EmailContact = {
+  email: string;
+  firstName: string | null;
+};
+
+export async function subscribeEmailContact(email: string, firstName?: string) {
   const apiKey = process.env.RESEND_API_KEY;
 
   if (!apiKey) {
@@ -73,7 +78,11 @@ export async function subscribeEmailContact(email: string) {
   const createResponse = await fetch(`${resendApiUrl}/contacts`, {
     method: "POST",
     headers: resendHeaders(apiKey),
-    body: JSON.stringify({ email, unsubscribed: false }),
+    body: JSON.stringify({
+      email,
+      first_name: firstName || undefined,
+      unsubscribed: false,
+    }),
   });
 
   if (createResponse.ok) {
@@ -84,7 +93,10 @@ export async function subscribeEmailContact(email: string) {
     const updateResponse = await fetch(`${resendApiUrl}/contacts/${encodeURIComponent(email)}`, {
       method: "PATCH",
       headers: resendHeaders(apiKey),
-      body: JSON.stringify({ unsubscribed: false }),
+      body: JSON.stringify({
+        first_name: firstName || undefined,
+        unsubscribed: false,
+      }),
     });
 
     if (updateResponse.ok) {
@@ -101,7 +113,7 @@ export async function listSubscribedEmailContacts() {
   const apiKey = process.env.RESEND_API_KEY;
 
   if (!apiKey) {
-    return { ok: false as const, emails: [] as string[], error: "RESEND_API_KEY is not configured" };
+    return { ok: false as const, contacts: [] as EmailContact[], error: "RESEND_API_KEY is not configured" };
   }
 
   const response = await fetch(`${resendApiUrl}/contacts?limit=100`, {
@@ -110,15 +122,38 @@ export async function listSubscribedEmailContacts() {
   });
 
   if (!response.ok) {
-    return { ok: false as const, emails: [] as string[], error: await response.text() };
+    return { ok: false as const, contacts: [] as EmailContact[], error: await response.text() };
   }
 
   const body = (await response.json()) as {
-    data?: { email?: string; unsubscribed?: boolean }[];
+    data?: { email?: string; first_name?: string | null; unsubscribed?: boolean }[];
   };
-  const emails = (body.data ?? [])
+  const contacts = (body.data ?? [])
     .filter((contact) => contact.email && !contact.unsubscribed)
-    .map((contact) => contact.email as string);
+    .map((contact) => ({
+      email: contact.email as string,
+      firstName: contact.first_name?.trim() || null,
+    }));
 
-  return { ok: true as const, emails };
+  return { ok: true as const, contacts };
+}
+
+export async function unsubscribeEmailContact(email: string) {
+  const apiKey = process.env.RESEND_API_KEY;
+
+  if (!apiKey) {
+    return { ok: false as const, error: "RESEND_API_KEY is not configured" };
+  }
+
+  const response = await fetch(`${resendApiUrl}/contacts/${encodeURIComponent(email)}`, {
+    method: "PATCH",
+    headers: resendHeaders(apiKey),
+    body: JSON.stringify({ unsubscribed: true }),
+  });
+
+  if (!response.ok) {
+    return { ok: false as const, error: await response.text() };
+  }
+
+  return { ok: true as const };
 }

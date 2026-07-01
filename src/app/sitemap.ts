@@ -1,10 +1,16 @@
 import type { MetadataRoute } from "next";
 import { getRichBlogArticle } from "@/lib/blog-articles";
-import { blogPosts, countries } from "@/lib/visa-data";
+import { getPublicBlogPosts, getPublicSiteSections } from "@/lib/managed-content";
+import { countries } from "@/lib/visa-data";
 import { siteConfig } from "@/lib/site";
 import { slugify } from "@/lib/utils";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [blogPosts, managedSections] = await Promise.all([
+    getPublicBlogPosts(),
+    getPublicSiteSections(),
+  ]);
+  const builtInSectionKeys = new Set(["home-hero", "about-intro", "footer-description"]);
   const siteLastModified = new Date("2026-06-28");
   const staticRoutes = [
     "",
@@ -42,7 +48,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
     ...blogPosts.map((post) => ({
       url: `${siteConfig.url}/blog/${post.slug}`,
-      lastModified: new Date(getRichBlogArticle(post.slug)?.reviewedDate ?? post.updated),
+      lastModified: new Date(post.managed ? post.updated : getRichBlogArticle(post.slug)?.reviewedDate ?? post.updated),
       changeFrequency: "monthly" as const,
       priority: 0.75,
     })),
@@ -58,5 +64,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.6,
     })),
+    ...managedSections
+      .filter((section) => !builtInSectionKeys.has(section.key))
+      .map((section) => ({
+        url: `${siteConfig.url}/sections/${section.key}`,
+        lastModified: new Date(section.updatedAt),
+        changeFrequency: "monthly" as const,
+        priority: 0.55,
+      })),
   ];
 }

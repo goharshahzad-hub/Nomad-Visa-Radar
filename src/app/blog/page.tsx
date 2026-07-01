@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { ShareActions } from "@/components/share-actions";
 import { getRichArticleReadTime, getRichBlogArticle } from "@/lib/blog-articles";
-import { blogPosts } from "@/lib/visa-data";
+import { getPublicBlogPosts } from "@/lib/managed-content";
 import { siteConfig } from "@/lib/site";
 import { slugify } from "@/lib/utils";
 
@@ -32,21 +32,22 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BlogPage() {
-  const categories = Array.from(new Set(blogPosts.map((post) => post.category)));
-  const [featuredPost, ...remainingPosts] = blogPosts;
+export default async function BlogPage() {
+  const posts = await getPublicBlogPosts();
+  const categories = Array.from(new Set(posts.map((post) => post.category)));
+  const [featuredPost, ...remainingPosts] = posts;
   const schema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     name: "Digital Nomad Visa Blog",
     description: metadata.description,
     url: `${siteConfig.url}/blog`,
-    hasPart: blogPosts.map((post) => ({
+    hasPart: posts.map((post) => ({
       "@type": "Article",
       headline: post.title,
       url: `${siteConfig.url}/blog/${post.slug}`,
       image: post.image,
-      dateModified: getRichBlogArticle(post.slug)?.reviewedDate ?? post.updated,
+      dateModified: post.managed ? post.updated : getRichBlogArticle(post.slug)?.reviewedDate ?? post.updated,
     })),
   };
 
@@ -99,7 +100,7 @@ export default function BlogPage() {
             <p className="mt-4 leading-7 text-muted-foreground">{featuredPost.excerpt}</p>
             <div className="mt-5 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
               <span>{featuredPost.author}</span>
-              <span>Updated {getRichBlogArticle(featuredPost.slug)?.reviewedDate ?? featuredPost.updated}</span>
+              <span>Updated {featuredPost.managed ? featuredPost.updated : getRichBlogArticle(featuredPost.slug)?.reviewedDate ?? featuredPost.updated}</span>
               <span>{getRichArticleReadTime(featuredPost.slug, featuredPost.readTime)}</span>
             </div>
             <Link
@@ -143,7 +144,7 @@ export default function BlogPage() {
                   </div>
                   <div className="mt-6 flex items-center gap-2 text-sm text-muted-foreground">
                     <Clock3 className="h-4 w-4" />
-                    {getRichArticleReadTime(post.slug, post.readTime)} - Updated {getRichBlogArticle(post.slug)?.reviewedDate ?? post.updated}
+                    {post.managed ? post.readTime : getRichArticleReadTime(post.slug, post.readTime)} - Updated {post.managed ? post.updated : getRichBlogArticle(post.slug)?.reviewedDate ?? post.updated}
                   </div>
                 </div>
               </Link>

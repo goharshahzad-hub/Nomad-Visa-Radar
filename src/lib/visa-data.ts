@@ -3500,6 +3500,7 @@ export type BlogPost = {
     question: string;
     answer: string;
   }[];
+  managed?: boolean;
 };
 
 const blogImages = {

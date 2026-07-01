@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
-import { listSubscribedEmailContacts, sendEmail } from "@/lib/email";
+import { type EmailContact, listSubscribedEmailContacts, sendEmail } from "@/lib/email";
+import { buildWeeklyNewsletterEmail } from "@/lib/newsletter-email";
+import { createUnsubscribeUrl } from "@/lib/newsletter-token";
 import { getSupabaseServiceClient } from "@/lib/supabase/server";
-import { latestUpdates } from "@/lib/visa-data";
 
 export const dynamic = "force-dynamic";
 
@@ -20,35 +21,6 @@ function checkCronAuth(request: Request) {
   return null;
 }
 
-function digestHtml() {
-  const items = latestUpdates
-    .map(
-      (update) => `
-        <li>
-          <strong>${update.countryName}: ${update.title}</strong><br />
-          ${update.summary}<br />
-          <a href="${update.officialUrl}">Official visa information page</a>
-        </li>
-      `,
-    )
-    .join("");
-
-  return `
-    <h1>Nomad Visa Radar weekly update</h1>
-    <p>Daily source checks run automatically. Material visa-rule changes are verified before the country guidance is rewritten.</p>
-    <ul>${items}</ul>
-  `;
-}
-
-function digestText() {
-  return latestUpdates
-    .map(
-      (update) =>
-        `${update.countryName}: ${update.title}\n${update.summary}\nOfficial source: ${update.officialUrl}`,
-    )
-    .join("\n\n");
-}
-
 export async function GET(request: Request) {
   const authError = checkCronAuth(request);
 
@@ -57,7 +29,7 @@ export async function GET(request: Request) {
   }
 
   const resendContacts = await listSubscribedEmailContacts();
-  let subscriberEmails = resendContacts.ok ? resendContacts.emails : [];
+  let subscribers: EmailContact[] = resendContacts.ok ? resendContacts.contacts : [];
 
   if (!resendContacts.ok) {
     const supabase = getSupabaseServiceClient();
@@ -69,19 +41,26 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: "Could not load subscribers" }, { status: 500 });
     }
 
-    subscriberEmails = (data ?? []).map((subscriber: { email: string }) => subscriber.email);
+    subscribers = (data ?? []).map((subscriber: { email: string }) => ({
+      email: subscriber.email,
+      firstName: null,
+    }));
   }
 
   let sent = 0;
   let failed = 0;
 
-  for (const email of subscriberEmails) {
+  for (const subscriber of subscribers) {
+    const newsletter = buildWeeklyNewsletterEmail({
+      firstName: subscriber.firstName,
+      unsubscribeUrl: createUnsubscribeUrl(subscriber.email),
+    });
     const result = await sendEmail({
-      to: email,
-      subject: "Nomad Visa Radar weekly official-source update",
-      html: digestHtml(),
-      text: digestText(),
-      idempotencyKey: `newsletter-weekly-${new Date().toISOString().slice(0, 10)}-${email}`,
+      to: subscriber.email,
+      subject: newsletter.subject,
+      html: newsletter.html,
+      text: newsletter.text,
+      idempotencyKey: `newsletter-weekly-${new Date().toISOString().slice(0, 10)}-${subscriber.email}`,
     });
 
     if (result.ok) {
@@ -94,7 +73,7 @@ export async function GET(request: Request) {
   return NextResponse.json(
     {
       ok: failed === 0,
-      subscribers: subscriberEmails.length,
+      subscribers: subscribers.length,
       sent,
       failed,
       delivery: "automatic",

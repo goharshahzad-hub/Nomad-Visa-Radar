@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import type { AuthChangeEvent, Session, User } from "@supabase/supabase-js";
-import { LogOut, UserRound } from "lucide-react";
+import { LogOut, ShieldCheck, UserRound } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { getBrowserSupabaseClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
@@ -63,6 +63,7 @@ export function AuthNav({
 
     return name || user.email || "Dashboard";
   }, [user]);
+  const isOwner = user?.email?.trim().toLowerCase() === "goharshahzad@gmail.com";
 
   async function handleSignOut() {
     setIsSigningOut(true);
@@ -103,6 +104,17 @@ export function AuthNav({
         <UserRound className="h-4 w-4 shrink-0" />
         <span className="truncate">{accountLabel}</span>
       </Link>
+      {isOwner && (
+        <Link
+          href="/admin"
+          onClick={onNavigate}
+          className={buttonVariants({ variant: "ghost", size: "icon" })}
+          aria-label="Open content studio"
+          title="Content studio"
+        >
+          <ShieldCheck className="h-4 w-4" />
+        </Link>
+      )}
       <button
         type="button"
         onClick={handleSignOut}

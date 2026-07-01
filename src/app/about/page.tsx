@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SimplePage } from "@/components/simple-page";
+import { getSiteSection } from "@/lib/managed-content";
 
 export const metadata: Metadata = {
   title: "About",
@@ -8,23 +9,12 @@ export const metadata: Metadata = {
   alternates: { canonical: "/about" },
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const intro = await getSiteSection("about-intro");
+  const paragraphs = intro?.body.split(/\n\s*\n/).filter(Boolean) ?? [];
   return (
-    <SimplePage eyebrow="About" title="Visa intelligence for careful remote moves">
-      <p>
-        Nomad Visa Radar is an independent research site for remote workers,
-        freelancers, founders, families, and relocation teams comparing digital
-        nomad visas and remote-work residence routes. The site is built for
-        people who want practical context before they spend money on
-        appointments, relocation plans, or professional advice.
-      </p>
-      <p>
-        Our goal is to make the first stage of research calmer and more useful:
-        which countries have relevant routes, what evidence usually matters,
-        where official instructions live, and which details need extra checking
-        before a decision. We do not sell visas, guarantee approvals, or replace
-        immigration or tax professionals.
-      </p>
+    <SimplePage eyebrow="About" title={intro?.title ?? "Visa intelligence for careful remote moves"}>
+      {paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
       <h2 className="text-xl font-semibold text-foreground">Who runs the site</h2>
       <p>
         Nomad Visa Radar is founded and edited by Gohar Shahzad. The site is an
